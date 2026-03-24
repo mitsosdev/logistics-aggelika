@@ -1,14 +1,69 @@
 {
+  "Nav": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "contact": "Contact",
+    "callUs": "Call us"
+  },
+  "Hero": {
+    "badge": "Accounting & Tax Office",
+    "title": "Trusted Accounting & Tax Consulting Services",
+    "subtitle": "Ilias P. Viliotis — Financial Consultant with years of experience in accounting, tax, and labor management.",
+    "cta1": "Contact us",
+    "cta2": "Our services"
+  },
+  "About": {
+    "label": "About us",
+    "title": "The Consultant You Trust",
+    "description": "Based in Melissia, Attica, the accounting office of Viliotis Ilias provides comprehensive accounting, tax, and labor services to individuals and businesses. A graduate of the University of Piraeus (A.B.S.P.), Ilias Viliotis combines academic expertise with practical experience to deliver specialized solutions.",
+    "card1Title": "Experience",
+    "card1Desc": "Years of experience in accounting and tax matters",
+    "card2Title": "Reliability",
+    "card2Desc": "Consistency and responsibility in every transaction",
+    "card3Title": "Expertise",
+    "card3Desc": "Graduate of A.B.S.P. — University of Piraeus"
+  },
+  "Services": {
+    "label": "Services",
+    "title": "What We Offer",
+    "subtitle": "Comprehensive solutions for every accounting, tax, and labor need.",
+    "accounting": "Accounting",
+    "accountingDesc": "Bookkeeping (single & double entry), balance sheets, VAT, periodic declarations, and financial statements.",
+    "tax": "Tax Consulting",
+    "taxDesc": "Tax returns (E1, E2, E9), property tax (ENFIA), tax planning, audit support, and appeals.",
+    "payroll": "Labor & Payroll",
+    "payrollDesc": "Payroll processing, social security declarations, employment contracts, hiring/termination, ERGANI, and labor disputes."
+  },
+  "Contact": {
+    "label": "Contact",
+    "title": "Get in Touch",
+    "subtitle": "We are available for any questions or appointments.",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "fax": "Fax",
+    "hours": "Working Hours",
+    "weekdays": "Monday - Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    "formName": "Full Name",
+    "formEmail": "Email",
+    "formPhone": "Phone",
+    "formSubject": "Subject",
+    "formMessage": "Message",
+    "formSend": "Send",
+    "formSending": "Sending..."
+  },
+  "Footer": {
+    "description": "Accounting & Tax office in Melissia. Trusted services for individuals and businesses.",
+    "quickLinks": "Quick Links",
+    "contactInfo": "Contact Info",
+    "rights": "All rights reserved."
+  },
   "HomePage": {
-    "title": "Welcome",
-    "description": "Get started by editing this page.",
-    "components": {
-      "title": "Available Components",
-      "button": "Button",
-      "input": "Input",
-      "card": "Card",
-      "label": "Label"
-    }
+    "title": "Home",
+    "description": "Viliotis Ilias Accounting Office — Melissia"
   },
   "Admin": {
     "nav": {
