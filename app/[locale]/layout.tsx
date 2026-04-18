@@ -2,21 +2,21 @@ import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { setRequestLocale, getMessages } from "next-intl/server";
-import { Playfair_Display, Source_Sans_3 } from "next/font/google";
+import { Fraunces, Inter } from "next/font/google";
 import { routing } from "@/lib/i18n/routing";
 import { Providers } from "@/components/providers";
 import { BaseLayoutProps } from "@/types/page-props";
 import "./globals.css";
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600", "700"],
+  axes: ["opsz", "SOFT"],
   display: "swap",
 });
 
-const sourceSans = Source_Sans_3({
-  variable: "--font-source-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin", "latin-ext", "greek"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
@@ -87,7 +87,7 @@ const LocaleLayout = async ({ children, params }: BaseLayoutProps) => {
   return (
     <html lang={locale} suppressHydrationWarning>
       <body
-        className={`${playfair.variable} ${sourceSans.variable} font-sans antialiased`}
+        className={`${fraunces.variable} ${inter.variable} font-sans antialiased`}
       >
         <Providers messages={messages} locale={locale}>
           {children}

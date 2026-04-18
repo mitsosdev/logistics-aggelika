@@ -1,49 +1,54 @@
 import { getTranslations } from "next-intl/server";
-import { Award, ShieldCheck, GraduationCap } from "lucide-react";
-
-const CARDS = [
-  { key: "card1", icon: Award },
-  { key: "card2", icon: ShieldCheck },
-  { key: "card3", icon: GraduationCap },
-] as const;
 
 export const AboutSection = async () => {
   const t = await getTranslations("About");
 
   return (
-    <section id="about" className="py-20 lg:py-28">
-      <div className="container mx-auto px-4 lg:px-8">
-        {/* Section header */}
-        <div className="max-w-2xl mx-auto text-center mb-14">
-          <span className="text-xs font-semibold uppercase tracking-widest text-gold">
+    <section id="about" className="relative bg-ivory py-24 lg:py-40">
+      <div className="mx-auto max-w-[1280px] px-6 lg:px-10">
+        {/* Label */}
+        <div className="flex items-center gap-3 mb-12 lg:mb-20">
+          <span className="h-px w-12 bg-ink/30" />
+          <span className="text-[11px] font-medium tracking-[0.18em] uppercase text-muted-ink">
             {t("label")}
           </span>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold mt-3 mb-5">
-            {t("title")}
-          </h2>
-          <p className="text-muted-foreground leading-relaxed">
-            {t("description")}
-          </p>
         </div>
 
-        {/* Highlight cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          {CARDS.map(({ key, icon: Icon }) => (
-            <div
-              key={key}
-              className="group relative rounded-xl border bg-card p-6 text-center transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
-            >
-              <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-gold/10 text-gold transition-colors duration-300 group-hover:bg-gold group-hover:text-navy">
-                <Icon className="size-5" />
-              </div>
-              <h3 className="font-display text-lg font-semibold mb-2">
-                {t(`${key}Title` as "card1Title")}
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                {t(`${key}Desc` as "card1Desc")}
+        <div className="grid grid-cols-12 gap-10 lg:gap-16">
+          {/* Left — pull quote */}
+          <div className="col-span-12 lg:col-span-7">
+            <blockquote className="relative">
+              <span
+                className="absolute -left-2 -top-12 font-display text-[140px] leading-none text-emerald-brand/25 select-none"
+                aria-hidden
+              >
+                &ldquo;
+              </span>
+              <p className="font-display text-[clamp(1.75rem,3.5vw,2.75rem)] leading-[1.2] tracking-tight text-ink italic font-[450] text-balance">
+                {t("pullQuote")}
               </p>
+            </blockquote>
+
+            <div className="mt-12 flex items-center gap-4">
+              <div className="h-px flex-1 bg-ink/15" />
+              <div className="text-right">
+                <p className="font-display italic text-[17px] text-ink">
+                  {t("signatureName")}
+                </p>
+                <p className="text-[11px] uppercase tracking-wider text-muted-ink mt-0.5">
+                  {t("signatureRole")}
+                </p>
+              </div>
             </div>
-          ))}
+          </div>
+
+          {/* Right — prose */}
+          <div className="col-span-12 lg:col-span-5 space-y-5 text-[15.5px] leading-[1.65] text-ink/85 lg:pt-4">
+            <p className="first-letter:font-display first-letter:text-[56px] first-letter:float-left first-letter:leading-[0.85] first-letter:mr-2 first-letter:mt-1 first-letter:text-emerald-brand">
+              {t("paragraph1")}
+            </p>
+            <p>{t("paragraph2")}</p>
+          </div>
         </div>
       </div>
     </section>

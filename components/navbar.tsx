@@ -2,16 +2,15 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useTranslations } from "next-intl";
-import { Phone, Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { LanguageSwitcher } from "@/components/examples/language-switcher";
-import { ThemeSwitcher } from "@/components/examples/ThemeSwitcher";
+import Image from "next/image";
+import { Phone, Menu, X, ArrowUpRight } from "lucide-react";
 import { BUSINESS } from "@/lib/general/constants";
+import { cn } from "@/lib/general/utils";
 
 const NAV_LINKS = [
-  { href: "#home", key: "home" },
   { href: "#about", key: "about" },
   { href: "#services", key: "services" },
+  { href: "#process", key: "process" },
   { href: "#contact", key: "contact" },
 ] as const;
 
@@ -21,12 +20,10 @@ export const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleScroll = useCallback(() => {
-    setScrolled(window.scrollY > 50);
+    setScrolled(window.scrollY > 40);
   }, []);
 
-  const closeMobile = useCallback(() => {
-    setMobileOpen(false);
-  }, []);
+  const closeMobile = useCallback(() => setMobileOpen(false), []);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -34,11 +31,7 @@ export const Navbar = () => {
   }, [handleScroll]);
 
   useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
@@ -47,154 +40,156 @@ export const Navbar = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
+        className={cn(
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b",
           scrolled
-            ? "bg-background/95 backdrop-blur-md border-border shadow-sm"
+            ? "bg-ivory/85 backdrop-blur-xl border-rule"
             : "bg-transparent border-transparent"
-        }`}
+        )}
       >
-        <div className="container mx-auto flex h-16 items-center justify-between px-4 lg:px-8">
+        <div className="mx-auto max-w-[1280px] flex h-[72px] items-center justify-between px-6 lg:px-10">
           {/* Logo */}
-          <a
-            href="#home"
-            className="flex items-center gap-2.5 cursor-pointer"
-          >
-            <div className="flex size-9 items-center justify-center rounded-lg bg-navy text-gold font-display font-bold text-sm">
-              HB
+          <a href="#home" className="group flex items-center gap-3.5 cursor-pointer">
+            <div className="relative size-11">
+              <Image
+                src="/images/logo.webp"
+                alt="Βιλιώτης Ηλίας"
+                fill
+                priority
+                sizes="44px"
+                className="object-contain"
+              />
             </div>
-            <div className="hidden sm:block">
-              <p
-                className={`text-sm font-semibold leading-tight transition-colors duration-300 ${
-                  scrolled ? "text-foreground" : "text-white"
-                }`}
-              >
+            <div className="hidden sm:block leading-tight">
+              <p className="font-display text-[16px] text-ink tracking-tight">
                 {BUSINESS.name}
               </p>
-              <p
-                className={`text-xs leading-tight transition-colors duration-300 ${
-                  scrolled ? "text-muted-foreground" : "text-white/70"
-                }`}
-              >
+              <p className="text-[10px] text-muted-ink tracking-[0.14em] uppercase mt-0.5">
                 {BUSINESS.title}
               </p>
             </div>
           </a>
 
-          {/* Desktop nav links */}
-          <div className="hidden md:flex items-center gap-1">
+          {/* Desktop nav */}
+          <div className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.key}
                 href={link.href}
-                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors duration-300 cursor-pointer ${
-                  scrolled
-                    ? "text-foreground hover:text-gold hover:bg-accent"
-                    : "text-white/90 hover:text-white hover:bg-white/10"
-                }`}
+                className="relative text-[13px] font-medium text-ink/80 hover:text-ink transition-colors duration-300 cursor-pointer after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-emerald-brand after:transition-all after:duration-300 hover:after:w-full"
               >
                 {t(link.key)}
               </a>
             ))}
           </div>
 
-          {/* Desktop right side */}
-          <div className="hidden md:flex items-center gap-2">
+          {/* Right actions */}
+          <div className="hidden md:flex items-center gap-5">
             <a
               href={BUSINESS.phone.landline1Href}
-              className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-300 cursor-pointer ${
-                scrolled
-                  ? "text-gold hover:text-gold/80"
-                  : "text-gold-light hover:text-white"
-              }`}
+              className="flex items-center gap-1.5 text-[13px] font-medium text-muted-ink hover:text-ink transition-colors duration-300 tabular-nums cursor-pointer"
             >
-              <Phone className="size-3.5" />
+              <Phone className="size-3.5" strokeWidth={1.75} />
               {BUSINESS.phone.landline1}
             </a>
-            <div className="flex items-center gap-1 ml-2">
-              <LanguageSwitcher />
-              <ThemeSwitcher />
-            </div>
+            <a
+              href="#contact"
+              className="group inline-flex items-center gap-1.5 bg-ink text-ivory text-[13px] font-medium px-4 py-2.5 rounded-sm hover:bg-emerald-brand transition-colors duration-300 cursor-pointer"
+            >
+              {t("book")}
+              <ArrowUpRight
+                className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                strokeWidth={1.75}
+              />
+            </a>
           </div>
 
           {/* Mobile hamburger */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className={`md:hidden p-2 rounded-md cursor-pointer transition-colors duration-300 ${
-              scrolled
-                ? "text-foreground hover:bg-accent"
-                : "text-white hover:bg-white/10"
-            }`}
+            className="md:hidden p-2 -mr-2 text-ink cursor-pointer"
             aria-label="Toggle menu"
           >
-            {mobileOpen ? (
-              <X className="size-5" />
-            ) : (
-              <Menu className="size-5" />
-            )}
+            {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
         </div>
       </nav>
 
-      {/* Mobile slide-in panel */}
+      {/* Mobile panel */}
       <div
-        className={`fixed inset-0 z-40 transition-opacity duration-300 md:hidden ${
+        className={cn(
+          "fixed inset-0 z-40 md:hidden transition-opacity duration-300",
           mobileOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
-        }`}
+        )}
       >
-        {/* Backdrop */}
         <div
-          className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+          className="absolute inset-0 bg-ink/40 backdrop-blur-sm"
           onClick={closeMobile}
         />
-
-        {/* Panel */}
         <div
-          className={`absolute top-0 right-0 h-full w-72 bg-background shadow-2xl transition-transform duration-300 ${
+          className={cn(
+            "absolute top-0 right-0 h-full w-80 bg-ivory shadow-2xl transition-transform duration-400 ease-out",
             mobileOpen ? "translate-x-0" : "translate-x-full"
-          }`}
+          )}
         >
-          <div className="flex items-center justify-between p-4 border-b">
-            <div className="flex items-center gap-2">
-              <div className="flex size-8 items-center justify-center rounded-lg bg-navy text-gold font-display font-bold text-xs">
-                HB
+          <div className="flex items-center justify-between p-6 border-b border-rule">
+            <div className="flex items-center gap-2.5">
+              <div className="relative size-9">
+                <Image
+                  src="/images/logo.webp"
+                  alt=""
+                  fill
+                  sizes="36px"
+                  className="object-contain"
+                />
               </div>
-              <span className="font-semibold text-sm">{BUSINESS.name}</span>
+              <span className="font-display text-sm text-ink">
+                {BUSINESS.name}
+              </span>
             </div>
             <button
               onClick={closeMobile}
-              className="p-1.5 rounded-md hover:bg-accent cursor-pointer transition-colors duration-300"
+              className="p-1.5 text-ink cursor-pointer"
               aria-label="Close menu"
             >
               <X className="size-4" />
             </button>
           </div>
 
-          <div className="flex flex-col p-4 gap-1">
-            {NAV_LINKS.map((link) => (
+          <div className="flex flex-col px-6 py-8 gap-1">
+            {NAV_LINKS.map((link, i) => (
               <a
                 key={link.key}
                 href={link.href}
                 onClick={closeMobile}
-                className="px-3 py-2.5 text-sm font-medium rounded-md hover:bg-accent transition-colors duration-300 cursor-pointer"
+                className="flex items-baseline gap-3 py-3 border-b border-rule/60 text-ink hover:text-emerald-brand transition-colors duration-300 cursor-pointer"
               >
-                {t(link.key)}
+                <span className="font-display text-[11px] text-muted-ink tabular-nums">
+                  0{i + 1}
+                </span>
+                <span className="text-base font-medium">{t(link.key)}</span>
               </a>
             ))}
           </div>
 
-          <div className="p-4 border-t space-y-3">
-            <Button asChild className="w-full gap-2" size="sm">
-              <a href={BUSINESS.phone.landline1Href}>
-                <Phone className="size-3.5" />
-                {t("callUs")}
-              </a>
-            </Button>
-            <div className="flex items-center gap-2 justify-center">
-              <LanguageSwitcher />
-              <ThemeSwitcher />
-            </div>
+          <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-rule space-y-3 bg-paper/40">
+            <a
+              href={BUSINESS.phone.landline1Href}
+              className="flex items-center gap-2 text-sm text-ink tabular-nums"
+            >
+              <Phone className="size-4" strokeWidth={1.75} />
+              {BUSINESS.phone.landline1}
+            </a>
+            <a
+              href="#contact"
+              onClick={closeMobile}
+              className="flex items-center justify-center gap-1.5 w-full bg-ink text-ivory text-sm font-medium px-4 py-3 rounded-sm hover:bg-emerald-brand transition-colors duration-300"
+            >
+              {t("book")}
+              <ArrowUpRight className="size-4" strokeWidth={1.75} />
+            </a>
           </div>
         </div>
       </div>

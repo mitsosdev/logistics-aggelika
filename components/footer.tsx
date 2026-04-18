@@ -1,12 +1,20 @@
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { BUSINESS } from "@/lib/general/constants";
-import { Phone, Mail, MapPin, Hexagon } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 const NAV_LINKS = [
-  { href: "#home", key: "home" },
   { href: "#about", key: "about" },
   { href: "#services", key: "services" },
+  { href: "#process", key: "process" },
   { href: "#contact", key: "contact" },
+] as const;
+
+const SERVICE_LINKS = [
+  "Λογιστικά & Τήρηση Βιβλίων",
+  "Φοροτεχνικά & Σχεδιασμός",
+  "Εργατικά & Μισθοδοσία",
+  "Φορολογικός Σχεδιασμός",
 ] as const;
 
 const Footer = async () => {
@@ -14,38 +22,63 @@ const Footer = async () => {
   const tNav = await getTranslations("Nav");
 
   return (
-    <footer className="border-t bg-navy text-white/80">
-      <div className="container mx-auto px-4 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          {/* Brand */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2.5">
-              <div className="flex size-9 items-center justify-center rounded-lg bg-gold text-navy font-display font-bold text-sm">
-                HB
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-white">
-                  {BUSINESS.name}
+    <footer className="relative bg-ink text-ivory">
+      {/* Top band: big wordmark */}
+      <div className="border-b border-ivory/10">
+        <div className="mx-auto max-w-[1280px] px-6 lg:px-10 py-16 lg:py-20">
+          <div className="grid grid-cols-12 gap-8 items-end">
+            <div className="col-span-12 lg:col-span-7">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="relative size-14 rounded-sm bg-white/95">
+                  <Image
+                    src="/images/logo.webp"
+                    alt=""
+                    fill
+                    sizes="56px"
+                    className="object-contain p-1.5"
+                  />
+                </div>
+                <p className="text-[11px] uppercase tracking-[0.18em] text-ivory/50">
+                  {BUSINESS.titleEn} · Est. 1993
                 </p>
-                <p className="text-xs text-white/50">{BUSINESS.title}</p>
               </div>
+              <h3 className="font-display text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.95] tracking-[-0.02em] font-[450]">
+                {BUSINESS.name}
+                <span className="italic text-emerald-brand">.</span>
+              </h3>
             </div>
-            <p className="text-sm leading-relaxed text-white/60">
-              {t("description")}
-            </p>
+            <div className="col-span-12 lg:col-span-5">
+              <p className="text-[15px] leading-[1.6] text-ivory/70 max-w-md">
+                {t("description")}
+              </p>
+              <a
+                href="#contact"
+                className="group mt-8 inline-flex items-center gap-2 text-[13px] font-medium text-ivory border-b border-ivory/40 hover:border-emerald-brand hover:text-emerald-brand transition-colors duration-300 pb-1"
+              >
+                {tNav("book")}
+                <ArrowUpRight
+                  className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  strokeWidth={1.75}
+                />
+              </a>
+            </div>
           </div>
+        </div>
+      </div>
 
-          {/* Quick links */}
+      {/* Middle band: columns */}
+      <div className="mx-auto max-w-[1280px] px-6 lg:px-10 py-16">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-10">
           <div>
-            <h4 className="font-display text-sm font-semibold text-white mb-4">
-              {t("quickLinks")}
+            <h4 className="text-[11px] uppercase tracking-wider text-ivory/50 mb-5">
+              {t("navHeading")}
             </h4>
-            <ul className="space-y-2">
+            <ul className="space-y-3">
               {NAV_LINKS.map((link) => (
                 <li key={link.key}>
                   <a
                     href={link.href}
-                    className="text-sm text-white/60 hover:text-gold transition-colors duration-300 cursor-pointer"
+                    className="text-[14px] text-ivory/85 hover:text-emerald-brand transition-colors duration-300 cursor-pointer"
                   >
                     {tNav(link.key)}
                   </a>
@@ -54,56 +87,81 @@ const Footer = async () => {
             </ul>
           </div>
 
-          {/* Contact info */}
           <div>
-            <h4 className="font-display text-sm font-semibold text-white mb-4">
-              {t("contactInfo")}
+            <h4 className="text-[11px] uppercase tracking-wider text-ivory/50 mb-5">
+              {t("servicesHeading")}
             </h4>
             <ul className="space-y-3">
-              <li className="flex items-start gap-2 text-sm text-white/60">
-                <MapPin className="size-4 mt-0.5 shrink-0 text-gold" />
-                <span>
-                  {BUSINESS.address.street}, {BUSINESS.address.city}{" "}
-                  {BUSINESS.address.zip}
-                </span>
+              {SERVICE_LINKS.map((s) => (
+                <li key={s}>
+                  <a
+                    href="#services"
+                    className="text-[14px] text-ivory/85 hover:text-emerald-brand transition-colors duration-300 cursor-pointer"
+                  >
+                    {s}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-[11px] uppercase tracking-wider text-ivory/50 mb-5">
+              {t("contactHeading")}
+            </h4>
+            <ul className="space-y-3 text-[14px] text-ivory/85">
+              <li>{BUSINESS.address.street}</li>
+              <li>
+                {BUSINESS.address.city} {BUSINESS.address.zip}
               </li>
               <li>
                 <a
                   href={BUSINESS.phone.landline1Href}
-                  className="flex items-center gap-2 text-sm text-white/60 hover:text-gold transition-colors duration-300 cursor-pointer"
+                  className="hover:text-emerald-brand transition-colors tabular-nums cursor-pointer"
                 >
-                  <Phone className="size-4 shrink-0 text-gold" />
                   {BUSINESS.phone.landline1}
                 </a>
               </li>
               <li>
                 <a
                   href={`mailto:${BUSINESS.email}`}
-                  className="flex items-center gap-2 text-sm text-white/60 hover:text-gold transition-colors duration-300 cursor-pointer"
+                  className="hover:text-emerald-brand transition-colors cursor-pointer break-all"
                 >
-                  <Mail className="size-4 shrink-0 text-gold" />
                   {BUSINESS.email}
                 </a>
               </li>
             </ul>
           </div>
+
+          <div>
+            <h4 className="text-[11px] uppercase tracking-wider text-ivory/50 mb-5">
+              {t("hoursHeading")}
+            </h4>
+            <ul className="space-y-3 text-[14px] text-ivory/85">
+              <li className="flex items-center gap-2">
+                <span className="size-1.5 rounded-full bg-emerald-brand animate-pulse" />
+                Δευ — Παρ · {BUSINESS.hours.weekdays}
+              </li>
+              <li>Σάββατο · {BUSINESS.hours.saturday}</li>
+              <li>Κυριακή · {BUSINESS.hours.sunday}</li>
+            </ul>
+          </div>
         </div>
       </div>
 
-      {/* Bottom bar */}
-      <div className="border-t border-white/10">
-        <div className="container mx-auto px-4 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <p className="text-xs text-white/40">
+      {/* Bottom */}
+      <div className="border-t border-ivory/10">
+        <div className="mx-auto max-w-[1280px] px-6 lg:px-10 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-[12px] text-ivory/50">
             &copy; {new Date().getFullYear()} {BUSINESS.name}. {t("rights")}
           </p>
           <a
-            href="https://hexaigon.com"
+            href="https://hexaigon.gr"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-xs text-white/40 hover:text-gold transition-colors duration-300 cursor-pointer"
+            className="text-[12px] text-ivory/50 hover:text-emerald-brand transition-colors cursor-pointer"
           >
-            <Hexagon className="size-3.5 text-primary" />
-            Made by Hexaigon
+            Crafted by Hexaigon
           </a>
         </div>
       </div>

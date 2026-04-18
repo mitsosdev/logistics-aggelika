@@ -1,77 +1,153 @@
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 
 const SERVICES = [
   {
-    key: "accounting",
+    prefix: "s1",
     image: "/images/services/accounting.jpg",
-    alt: "Accounting and bookkeeping services",
+    alt: "Λογιστικά και τήρηση βιβλίων",
   },
   {
-    key: "tax",
+    prefix: "s2",
     image: "/images/services/tax.jpg",
-    alt: "Tax consulting and declarations",
+    alt: "Φοροτεχνικά και στρατηγική",
   },
   {
-    key: "payroll",
+    prefix: "s3",
     image: "/images/services/payroll.jpg",
-    alt: "Payroll and labor services",
+    alt: "Εργατικά και μισθοδοσία",
+  },
+  {
+    prefix: "s4",
+    image: "/images/services/other.jpg",
+    alt: "Λοιπές υπηρεσίες — επιδόματα, gov.gr",
   },
 ] as const;
+
+type Prefix = (typeof SERVICES)[number]["prefix"];
 
 export const ServicesSection = async () => {
   const t = await getTranslations("Services");
 
   return (
-    <section id="services" className="py-20 lg:py-28 bg-muted/50">
-      <div className="container mx-auto px-4 lg:px-8">
-        {/* Section header */}
-        <div className="max-w-2xl mx-auto text-center mb-14">
-          <span className="text-xs font-semibold uppercase tracking-widest text-gold">
-            {t("label")}
-          </span>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold mt-3 mb-5">
-            {t("title")}
-          </h2>
-          <p className="text-muted-foreground leading-relaxed">
-            {t("subtitle")}
-          </p>
+    <section id="services" className="relative bg-paper/50 py-24 lg:py-40 border-y border-ink/8">
+      <div className="mx-auto max-w-[1280px] px-6 lg:px-10">
+        {/* Header */}
+        <div className="grid grid-cols-12 gap-6 lg:gap-10 mb-16 lg:mb-24">
+          <div className="col-span-12 lg:col-span-4">
+            <div className="flex items-center gap-3">
+              <span className="h-px w-12 bg-ink/30" />
+              <span className="text-[11px] font-medium tracking-[0.18em] uppercase text-muted-ink">
+                {t("label")}
+              </span>
+            </div>
+          </div>
+          <div className="col-span-12 lg:col-span-8">
+            <h2 className="font-display text-[clamp(2.25rem,5vw,4rem)] leading-[1.02] tracking-[-0.015em] text-ink font-[500] text-balance">
+              {t("title")}
+              <span className="italic text-muted-ink font-[450]">
+                {" "}
+                {t("titleAccent")}
+              </span>
+            </h2>
+          </div>
         </div>
 
-        {/* Service cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {SERVICES.map(({ key, image, alt }) => (
-            <div
-              key={key}
-              className="group relative overflow-hidden rounded-xl bg-card shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
-            >
-              {/* Image */}
-              <div className="relative h-48 overflow-hidden">
-                <Image
-                  src={image}
-                  alt={alt}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-linear-to-t from-navy/80 via-navy/30 to-transparent" />
-                <h3 className="absolute bottom-4 left-4 font-display text-xl font-bold text-white">
-                  {t(key)}
-                </h3>
-              </div>
-
-              {/* Description */}
-              <div className="p-5">
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {t(`${key}Desc` as "accountingDesc")}
-                </p>
-              </div>
-
-              {/* Gold accent line */}
-              <div className="h-0.5 bg-gold/0 group-hover:bg-gold transition-colors duration-300" />
-            </div>
+        {/* Services list */}
+        <div className="divide-y divide-ink/10">
+          {SERVICES.map(({ prefix, image, alt }) => (
+            <ServiceRow
+              key={prefix}
+              number={t(`${prefix}Number` as `${Prefix}Number`)}
+              title={t(`${prefix}Title` as `${Prefix}Title`)}
+              desc={t(`${prefix}Desc` as `${Prefix}Desc`)}
+              bullets={[
+                t(`${prefix}Bullet1` as `${Prefix}Bullet1`),
+                t(`${prefix}Bullet2` as `${Prefix}Bullet2`),
+                t(`${prefix}Bullet3` as `${Prefix}Bullet3`),
+              ]}
+              image={image}
+              alt={alt}
+              readMore={t("readMore")}
+            />
           ))}
         </div>
       </div>
     </section>
   );
 };
+
+type ServiceRowProps = {
+  number: string;
+  title: string;
+  desc: string;
+  bullets: readonly string[];
+  image: string;
+  alt: string;
+  readMore: string;
+};
+
+const ServiceRow = ({
+  number,
+  title,
+  desc,
+  bullets,
+  image,
+  alt,
+  readMore,
+}: ServiceRowProps) => (
+  <article className="group grid grid-cols-12 gap-6 lg:gap-10 py-10 lg:py-14 items-start">
+    {/* Number */}
+    <div className="col-span-2 lg:col-span-1">
+      <span className="font-display text-[clamp(1.5rem,2.25vw,2rem)] text-muted-ink/60 tabular-nums font-[450]">
+        {number}
+      </span>
+    </div>
+
+    {/* Title + desc + bullets */}
+    <div className="col-span-10 lg:col-span-6 space-y-6">
+      <h3 className="font-display text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.1] tracking-tight text-ink font-[500]">
+        {title}
+      </h3>
+      <p className="text-[15.5px] leading-[1.6] text-muted-ink max-w-xl">
+        {desc}
+      </p>
+      <ul className="space-y-2 pt-1">
+        {bullets.map((b) => (
+          <li
+            key={b}
+            className="flex items-center gap-3 text-[13px] text-ink/80"
+          >
+            <span className="h-px w-6 bg-emerald-brand shrink-0" />
+            {b}
+          </li>
+        ))}
+      </ul>
+      <a
+        href="#contact"
+        className="inline-flex items-center gap-1.5 text-[13px] font-medium text-ink border-b border-ink/30 hover:border-emerald-brand hover:text-emerald-brand transition-colors duration-300 pb-0.5 cursor-pointer"
+      >
+        {readMore}
+        <ArrowUpRight
+          className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+          strokeWidth={1.75}
+        />
+      </a>
+    </div>
+
+    {/* Image */}
+    <div className="col-span-12 lg:col-span-5 lg:pl-8">
+      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-sm bg-ivory">
+        <Image
+          src={image}
+          alt={alt}
+          fill
+          sizes="(max-width: 1024px) 100vw, 480px"
+          className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+        />
+        <div className="absolute inset-0 bg-ink/10 mix-blend-multiply transition-opacity duration-500 group-hover:opacity-0" />
+      </div>
+    </div>
+  </article>
+);

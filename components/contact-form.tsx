@@ -2,11 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { useTranslations } from "next-intl";
-import { Send, Loader2, User, Mail, Phone, FileText, MessageSquare } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
+import { ArrowUpRight, Loader2 } from "lucide-react";
 import { BUSINESS } from "@/lib/general/constants";
 
 export const ContactForm = () => {
@@ -27,7 +23,9 @@ export const ContactForm = () => {
       const message = data.get("message") as string;
 
       const body = `Name: ${name}%0AEmail: ${email}%0APhone: ${phone}%0A%0A${message}`;
-      window.location.href = `mailto:${BUSINESS.email}?subject=${encodeURIComponent(subject)}&body=${body}`;
+      window.location.href = `mailto:${BUSINESS.email}?subject=${encodeURIComponent(
+        subject
+      )}&body=${body}`;
 
       setTimeout(() => setSending(false), 2000);
     },
@@ -35,93 +33,81 @@ export const ContactForm = () => {
   );
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="rounded-xl border bg-card p-6 lg:p-8 space-y-5 shadow-sm"
-    >
-      <div className="space-y-1.5">
-        <Label htmlFor="name" className="text-sm font-medium">
-          <User className="inline size-3.5" /> {t("formName")}
-        </Label>
-        <Input
-          id="name"
-          name="name"
-          required
-          placeholder="..."
-          className="h-10"
-        />
+    <form onSubmit={handleSubmit} className="space-y-7">
+      <Field id="name" name="name" label={t("formName")} required />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-7">
+        <Field id="email" name="email" type="email" label={t("formEmail")} required />
+        <Field id="phone" name="phone" type="tel" label={t("formPhone")} />
       </div>
+      <Field id="subject" name="subject" label={t("formSubject")} required />
+      <TextField id="message" name="message" label={t("formMessage")} required />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="space-y-1.5">
-          <Label htmlFor="email" className="text-sm font-medium">
-            <Mail className="inline size-3.5" /> {t("formEmail")}
-          </Label>
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            required
-            placeholder="..."
-            className="h-10"
-          />
-        </div>
-        <div className="space-y-1.5">
-          <Label htmlFor="phone" className="text-sm font-medium">
-            <Phone className="inline size-3.5" /> {t("formPhone")}
-          </Label>
-          <Input
-            id="phone"
-            name="phone"
-            type="tel"
-            placeholder="..."
-            className="h-10"
-          />
-        </div>
-      </div>
-
-      <div className="space-y-1.5">
-        <Label htmlFor="subject" className="text-sm font-medium">
-          <FileText className="inline size-3.5" /> {t("formSubject")}
-        </Label>
-        <Input
-          id="subject"
-          name="subject"
-          required
-          placeholder="..."
-          className="h-10"
-        />
-      </div>
-
-      <div className="space-y-1.5">
-        <Label htmlFor="message" className="text-sm font-medium">
-          <MessageSquare className="inline size-3.5" /> {t("formMessage")}
-        </Label>
-        <Textarea
-          id="message"
-          name="message"
-          required
-          rows={4}
-          placeholder="..."
-          className="resize-none"
-        />
-      </div>
-
-      <Button
+      <button
         type="submit"
         disabled={sending}
-        className="w-full bg-navy hover:bg-navy-light gap-2 cursor-pointer"
-        size="lg"
+        className="group mt-4 inline-flex items-center gap-2 bg-ink text-ivory text-[14px] font-medium px-6 py-3.5 rounded-sm hover:bg-emerald-brand transition-colors duration-300 cursor-pointer disabled:opacity-60"
       >
         {sending ? (
-          <Loader2 className="size-4 animate-spin" />
+          <>
+            <Loader2 className="size-4 animate-spin" />
+            {t("formSending")}
+          </>
         ) : (
           <>
-            <Send className="size-4" />
             {t("formSend")}
+            <ArrowUpRight
+              className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              strokeWidth={1.75}
+            />
           </>
         )}
-      </Button>
+      </button>
     </form>
   );
 };
+
+type FieldProps = {
+  id: string;
+  name: string;
+  type?: string;
+  label: string;
+  required?: boolean;
+};
+
+const Field = ({ id, name, type = "text", label, required }: FieldProps) => (
+  <div className="group relative">
+    <label
+      htmlFor={id}
+      className="block text-[10px] uppercase tracking-[0.15em] text-muted-ink mb-2"
+    >
+      {label}
+      {required ? " *" : ""}
+    </label>
+    <input
+      id={id}
+      name={name}
+      type={type}
+      required={required}
+      className="peer w-full bg-transparent border-0 border-b-2 border-ink/15 py-2.5 text-[15px] text-ink placeholder-muted-ink/60 focus:border-emerald-brand focus:outline-none focus:ring-0 transition-colors duration-300"
+    />
+  </div>
+);
+
+const TextField = ({ id, name, label, required }: FieldProps) => (
+  <div className="group relative">
+    <label
+      htmlFor={id}
+      className="block text-[10px] uppercase tracking-[0.15em] text-muted-ink mb-2"
+    >
+      {label}
+      {required ? " *" : ""}
+    </label>
+    <textarea
+      id={id}
+      name={name}
+      required={required}
+      rows={4}
+      className="peer w-full bg-transparent border-0 border-b-2 border-ink/15 py-2.5 text-[15px] text-ink placeholder-muted-ink/60 focus:border-emerald-brand focus:outline-none focus:ring-0 transition-colors duration-300 resize-none"
+    />
+  </div>
+);
