@@ -25,17 +25,27 @@ export const fetchAadeArticles = async (
     const res = await fetch(`${AADE_BASE}${AADE_NEWS_PATH}`, {
       headers: {
         "User-Agent":
-          "Mozilla/5.0 (compatible; ViliotisAccounting/1.0; +https://viliotis.gr)",
-        Accept: "text/html,application/xhtml+xml",
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+        "Accept-Language": "el-GR,el;q=0.9,en;q=0.8",
       },
       next: { revalidate: 3600, tags: ["aade-news"] },
     });
 
     if (!res.ok) {
+      console.error(
+        `[aade] fetch failed with status ${res.status} ${res.statusText}`
+      );
       throw new Error(`AADE fetch failed: ${res.status}`);
     }
 
     const html = await res.text();
+    if (html.length < 5000) {
+      console.error(
+        `[aade] response suspiciously short (${html.length} bytes) — likely blocked`
+      );
+    }
     const $ = cheerio.load(html);
     const articles: AadeArticle[] = [];
     const seen = new Set<string>();
