@@ -10,8 +10,8 @@ export const BUSINESS = {
   address: {
     street: "Ανδ. Παπανδρέου 2Α",
     streetEn: "And. Papandreou 2A",
-    building: "Εμπορικό Κέντρο Βεργίνα, 4ος όροφος",
-    buildingEn: "Vergina Commercial Center, 4th floor",
+    building: "Εμπορικό Κέντρο Βεργίνα, ισόγειο",
+    buildingEn: "Vergina Commercial Center, ground floor",
     city: "Μελίσσια",
     cityEn: "Melissia",
     zip: "151 27",
@@ -36,7 +36,7 @@ export const BUSINESS = {
     "https://www.google.com/maps/search/Ανδ.+Παπανδρέου+2Α+Μελίσσια+151+27",
 
   hours: {
-    weekdays: "09:00 - 17:00",
+    weekdays: "09:00 - 16:00",
     saturday: "Κατόπιν ραντεβού",
     saturdayEn: "By appointment",
     sunday: "Κλειστά",

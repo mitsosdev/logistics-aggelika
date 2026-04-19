@@ -3,7 +3,7 @@ import { Check } from "lucide-react";
 
 export const TrustTicker = async () => {
   const t = await getTranslations("Trust");
-  const items = [t("item1"), t("item2"), t("item3"), t("item4"), t("item5")];
+  const items = [t("item1"), t("item2"), t("item3")];
   const doubled = [...items, ...items];
 
   return (

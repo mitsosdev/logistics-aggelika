@@ -13,7 +13,7 @@ const schemaData = {
   email: BUSINESS.email,
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Ανδ. Παπανδρέου 2Α, Εμπορικό Κέντρο Βεργίνα, 4ος όροφος",
+    streetAddress: "Ανδ. Παπανδρέου 2Α, Εμπορικό Κέντρο Βεργίνα, ισόγειο",
     addressLocality: "Μελίσσια",
     postalCode: "15127",
     addressRegion: "Αττική",
@@ -29,7 +29,7 @@ const schemaData = {
       "@type": "OpeningHoursSpecification",
       dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
       opens: "09:00",
-      closes: "17:00",
+      closes: "16:00",
     },
   ],
   founder: {
