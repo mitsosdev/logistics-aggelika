@@ -28,7 +28,7 @@ export const AadeNewsSection = async () => {
         className="pointer-events-none absolute -top-32 -right-40 size-[480px] rounded-full opacity-[0.10] blur-3xl"
         style={{
           background:
-            "radial-gradient(circle, var(--emerald-brand), transparent 70%)",
+            "radial-gradient(circle, var(--brand), transparent 70%)",
         }}
       />
       {/* Grid pattern */}
@@ -43,22 +43,22 @@ export const AadeNewsSection = async () => {
 
       <div className="relative mx-auto max-w-[1280px] px-6 lg:px-10">
         {/* Header */}
-        <div className="grid grid-cols-12 gap-6 lg:gap-10 mb-14 lg:mb-20">
-          <div className="col-span-12 lg:col-span-7">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-10 mb-14 lg:mb-20">
+          <div className="lg:col-span-7">
             <div className="flex items-center gap-3 mb-6">
-              <span className="size-1.5 rounded-full bg-emerald-brand animate-pulse" />
+              <span className="size-1.5 rounded-full bg-brand animate-pulse" />
               <span className="text-[11px] font-medium tracking-[0.18em] uppercase text-ivory/60">
                 {t("label")}
               </span>
             </div>
             <h2 className="font-display text-[clamp(2.25rem,5vw,4rem)] leading-[1.02] tracking-[-0.015em] font-[500] text-balance">
               {t("title")}{" "}
-              <span className="italic text-emerald-brand font-[450]">
+              <span className="italic text-brand font-[450]">
                 {t("titleAccent")}
               </span>
             </h2>
           </div>
-          <div className="col-span-12 lg:col-span-5 lg:pt-3 flex lg:justify-end">
+          <div className="lg:col-span-5 lg:pt-3 flex lg:justify-end">
             <div className="max-w-sm">
               <p className="text-[15px] leading-[1.6] text-ivory/70">
                 {t("subtitle")}
@@ -92,7 +92,7 @@ export const AadeNewsSection = async () => {
           <span>{t("cta")}</span>
           <a
             href="#contact"
-            className="group inline-flex items-center gap-1.5 border-b border-ivory/30 hover:border-emerald-brand hover:text-emerald-brand transition-colors duration-300 pb-0.5 cursor-pointer"
+            className="group inline-flex items-center gap-1.5 border-b border-ivory/30 hover:border-brand hover:text-brand transition-colors duration-300 pb-0.5 cursor-pointer"
           >
             Επικοινωνία
             <ArrowUpRight
@@ -150,7 +150,7 @@ const ArticleCard = ({ article, readMore }: ArticleCardProps) => {
 
       {/* Middle — title */}
       <div className="mt-6 space-y-3 flex-1">
-        <p className="text-[10px] tracking-[0.15em] uppercase text-emerald-brand font-medium">
+        <p className="text-[10px] tracking-[0.15em] uppercase text-brand font-medium">
           Δελτίο Τύπου
         </p>
         <h3 className="font-display text-[17px] leading-[1.3] font-[500] text-balance line-clamp-5">
@@ -160,11 +160,11 @@ const ArticleCard = ({ article, readMore }: ArticleCardProps) => {
 
       {/* Bottom — read more */}
       <div className="mt-6 pt-5 border-t border-ivory/10 flex items-center justify-between gap-2">
-        <span className="text-[11px] uppercase tracking-wider text-ivory/50 group-hover:text-emerald-brand transition-colors duration-300">
+        <span className="text-[11px] uppercase tracking-wider text-ivory/50 group-hover:text-brand transition-colors duration-300">
           {readMore}
         </span>
         <ArrowUpRight
-          className="size-4 text-ivory/40 group-hover:text-emerald-brand group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300"
+          className="size-4 text-ivory/40 group-hover:text-brand group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300"
           strokeWidth={1.75}
         />
       </div>

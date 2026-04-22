@@ -14,12 +14,12 @@ export const AboutSection = async () => {
           </span>
         </div>
 
-        <div className="grid grid-cols-12 gap-10 lg:gap-16">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
           {/* Left — pull quote */}
-          <div className="col-span-12 lg:col-span-7">
+          <div className="lg:col-span-7">
             <blockquote className="relative">
               <span
-                className="absolute -left-2 -top-12 font-display text-[140px] leading-none text-emerald-brand/25 select-none"
+                className="absolute -left-2 -top-12 font-display text-[140px] leading-none text-brand/25 select-none"
                 aria-hidden
               >
                 &ldquo;
@@ -43,8 +43,8 @@ export const AboutSection = async () => {
           </div>
 
           {/* Right — prose */}
-          <div className="col-span-12 lg:col-span-5 space-y-5 text-[15.5px] leading-[1.65] text-ink/85 lg:pt-4">
-            <p className="first-letter:font-display first-letter:text-[56px] first-letter:float-left first-letter:leading-[0.85] first-letter:mr-2 first-letter:mt-1 first-letter:text-emerald-brand">
+          <div className="lg:col-span-5 space-y-5 text-[15.5px] leading-[1.65] text-ink/85 lg:pt-4">
+            <p className="first-letter:font-display first-letter:text-[56px] first-letter:float-left first-letter:leading-[0.85] first-letter:mr-2 first-letter:mt-1 first-letter:text-brand">
               {t("paragraph1")}
             </p>
             <p>{t("paragraph2")}</p>

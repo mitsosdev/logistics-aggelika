@@ -10,8 +10,8 @@ export const ProcessSection = async () => {
     <section id="process" className="relative bg-ivory py-24 lg:py-40">
       <div className="mx-auto max-w-[1280px] px-6 lg:px-10">
         {/* Header */}
-        <div className="grid grid-cols-12 gap-6 lg:gap-10 mb-16 lg:mb-28">
-          <div className="col-span-12 lg:col-span-4">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-10 mb-16 lg:mb-28">
+          <div className="lg:col-span-4">
             <div className="flex items-center gap-3">
               <span className="h-px w-12 bg-ink/30" />
               <span className="text-[11px] font-medium tracking-[0.18em] uppercase text-muted-ink">
@@ -19,10 +19,10 @@ export const ProcessSection = async () => {
               </span>
             </div>
           </div>
-          <div className="col-span-12 lg:col-span-8">
+          <div className="lg:col-span-8">
             <h2 className="font-display text-[clamp(2.25rem,5vw,4rem)] leading-[1.02] tracking-[-0.015em] text-ink font-[500] text-balance">
               {t("title")}{" "}
-              <span className="italic text-emerald-brand font-[450]">
+              <span className="italic text-brand font-[450]">
                 {t("titleAccent")}
               </span>
             </h2>
@@ -37,7 +37,7 @@ export const ProcessSection = async () => {
             aria-hidden
           />
           <div
-            className="absolute top-6 left-0 w-[40%] h-px bg-emerald-brand hidden lg:block"
+            className="absolute top-6 left-0 w-[40%] h-px bg-brand hidden lg:block"
             aria-hidden
           />
 
@@ -45,7 +45,7 @@ export const ProcessSection = async () => {
             {STEPS.map((key) => (
               <li key={key} className="relative">
                 {/* Dot */}
-                <div className="hidden lg:block absolute top-[18px] left-0 size-3 rounded-full bg-ivory border-2 border-emerald-brand" />
+                <div className="hidden lg:block absolute top-[18px] left-0 size-3 rounded-full bg-ivory border-2 border-brand" />
 
                 {/* Number */}
                 <div className="flex items-center gap-3 mb-5 lg:mt-14">
@@ -55,7 +55,10 @@ export const ProcessSection = async () => {
                   <span className="h-px flex-1 bg-ink/15 lg:hidden" />
                 </div>
 
-                <h3 className="font-display text-[22px] leading-tight text-ink font-[500] mb-3">
+                <h3
+                  className="font-display text-[22px] leading-tight text-ink font-medium mb-3"
+                  style={{ fontVariationSettings: "normal" }}
+                >
                   {t(`${key}Title` as `${StepKey}Title`)}
                 </h3>
                 <p className="text-[14.5px] leading-[1.6] text-muted-ink max-w-[320px]">

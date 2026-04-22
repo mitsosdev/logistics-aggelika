@@ -1,13 +1,21 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { BUSINESS } from "@/lib/general/constants";
-import { ArrowUpRight } from "lucide-react";
+import { Link } from "@/lib/i18n/navigation";
+import {
+  ArrowUpRight,
+  Hexagon,
+  Mail,
+  MapPin,
+  Phone,
+  Sparkles,
+} from "lucide-react";
 
 const NAV_LINKS = [
-  { href: "#about", key: "about" },
-  { href: "#services", key: "services" },
-  { href: "#process", key: "process" },
-  { href: "#contact", key: "contact" },
+  { href: "/#about", key: "about" },
+  { href: "/#services", key: "services" },
+  { href: "/#process", key: "process" },
+  { href: "/#contact", key: "contact" },
 ] as const;
 
 const SERVICE_LINKS = [
@@ -22,16 +30,66 @@ const Footer = async () => {
   const tNav = await getTranslations("Nav");
 
   return (
-    <footer className="relative bg-ink text-ivory">
-      {/* Top band: big wordmark */}
-      <div className="border-b border-ivory/10">
+    <footer className="relative overflow-hidden bg-ink text-ivory">
+      {/* Decorative glows */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-40 -left-40 size-[520px] rounded-full bg-brand/20 blur-[140px]"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-56 right-0 size-[480px] rounded-full bg-brand-deep/30 blur-[140px]"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.035]"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 1px 1px, #FAF8F3 1px, transparent 0)",
+          backgroundSize: "28px 28px",
+        }}
+      />
+
+      {/* CTA ribbon */}
+      <div className="relative border-b border-ivory/10">
+        <div className="mx-auto max-w-[1280px] px-6 lg:px-10 py-14 lg:py-16">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+            <div className="flex items-start gap-4">
+              <span className="mt-1 inline-flex size-9 items-center justify-center rounded-full bg-brand/15 text-brand ring-1 ring-brand/30">
+                <Sparkles className="size-4" strokeWidth={1.75} />
+              </span>
+              <div>
+                <h3 className="font-display text-[clamp(1.5rem,2.6vw,2.25rem)] leading-[1.1] tracking-[-0.01em] font-[500]">
+                  {t("ctaTitle")}
+                </h3>
+                <p className="mt-2 text-[14.5px] leading-[1.6] text-ivory/65 max-w-lg">
+                  {t("ctaSub")}
+                </p>
+              </div>
+            </div>
+            <Link
+              href="/#contact"
+              className="group inline-flex items-center gap-2.5 self-start lg:self-auto rounded-full bg-brand px-6 py-3.5 text-[13.5px] font-medium text-ivory shadow-[0_10px_30px_-12px_rgba(107,47,214,0.8)] hover:bg-brand-deep transition-all duration-300 hover:-translate-y-0.5 cursor-pointer"
+            >
+              {t("ctaButton")}
+              <ArrowUpRight
+                className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                strokeWidth={2}
+              />
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Top band: wordmark + description */}
+      <div className="relative border-b border-ivory/10">
         <div className="mx-auto max-w-[1280px] px-6 lg:px-10 py-16 lg:py-20">
-          <div className="grid grid-cols-12 gap-8 items-end">
-            <div className="col-span-12 lg:col-span-7">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 items-end">
+            <div className="lg:col-span-7">
               <div className="flex items-center gap-4 mb-8">
-                <div className="relative size-14 rounded-sm bg-white/95">
+                <div className="relative size-14 rounded-sm">
                   <Image
-                    src="/images/logo.webp"
+                    src="/images/logo-v2.webp"
                     alt=""
                     fill
                     sizes="56px"
@@ -39,74 +97,102 @@ const Footer = async () => {
                   />
                 </div>
                 <p className="text-[11px] uppercase tracking-[0.18em] text-ivory/50">
-                  {BUSINESS.titleEn} · Est. 1993
+                  {t("tagline")}
                 </p>
               </div>
-              <h3 className="font-display text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.95] tracking-[-0.02em] font-[450]">
+              <h3 className="font-instrument italic text-[clamp(3rem,7vw,6.5rem)] leading-[0.95] tracking-[-0.01em]">
                 {BUSINESS.name}
-                <span className="italic text-emerald-brand">.</span>
+                <span className="text-brand">.</span>
               </h3>
+              <div className="mt-6 flex items-center gap-3 text-[12px] text-ivory/55">
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="size-1.5 rounded-full bg-brand animate-pulse" />
+                  {t("openToday")} · {BUSINESS.hours.weekdays}
+                </span>
+                <span className="h-3 w-px bg-ivory/15" />
+                <span>{t("since")}</span>
+              </div>
             </div>
-            <div className="col-span-12 lg:col-span-5">
+            <div className="lg:col-span-5">
               <p className="text-[15px] leading-[1.6] text-ivory/70 max-w-md">
                 {t("description")}
               </p>
-              <a
-                href="#contact"
-                className="group mt-8 inline-flex items-center gap-2 text-[13px] font-medium text-ivory border-b border-ivory/40 hover:border-emerald-brand hover:text-emerald-brand transition-colors duration-300 pb-1"
-              >
-                {tNav("book")}
-                <ArrowUpRight
-                  className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                  strokeWidth={1.75}
-                />
-              </a>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href={BUSINESS.phone.landline1Href}
+                  className="group inline-flex items-center gap-2 rounded-full border border-ivory/15 bg-ivory/[0.03] px-4 py-2 text-[12.5px] text-ivory/85 hover:border-brand hover:text-brand transition-colors duration-300 cursor-pointer"
+                >
+                  <Phone className="size-3.5" strokeWidth={1.75} />
+                  <span className="tabular-nums">{BUSINESS.phone.landline1}</span>
+                </a>
+                <a
+                  href={`mailto:${BUSINESS.email}`}
+                  className="group inline-flex items-center gap-2 rounded-full border border-ivory/15 bg-ivory/[0.03] px-4 py-2 text-[12.5px] text-ivory/85 hover:border-brand hover:text-brand transition-colors duration-300 cursor-pointer"
+                >
+                  <Mail className="size-3.5" strokeWidth={1.75} />
+                  {t("contactHeading")}
+                </a>
+                <a
+                  href={BUSINESS.googleMapsLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 rounded-full border border-ivory/15 bg-ivory/[0.03] px-4 py-2 text-[12.5px] text-ivory/85 hover:border-brand hover:text-brand transition-colors duration-300 cursor-pointer"
+                >
+                  <MapPin className="size-3.5" strokeWidth={1.75} />
+                  {BUSINESS.address.city}
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Middle band: columns */}
-      <div className="mx-auto max-w-[1280px] px-6 lg:px-10 py-16">
+      <div className="relative mx-auto max-w-[1280px] px-6 lg:px-10 py-16">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-10">
           <div>
-            <h4 className="text-[11px] uppercase tracking-wider text-ivory/50 mb-5">
+            <h4 className="text-[11px] uppercase tracking-wider text-ivory/50 mb-5 flex items-center gap-2">
+              <span className="size-1 rounded-full bg-brand" />
               {t("navHeading")}
             </h4>
             <ul className="space-y-3">
               {NAV_LINKS.map((link) => (
                 <li key={link.key}>
-                  <a
+                  <Link
                     href={link.href}
-                    className="text-[14px] text-ivory/85 hover:text-emerald-brand transition-colors duration-300 cursor-pointer"
+                    className="group inline-flex items-center gap-1.5 text-[14px] text-ivory/85 hover:text-brand transition-colors duration-300 cursor-pointer"
                   >
+                    <span className="h-px w-0 bg-brand transition-all duration-300 group-hover:w-3" />
                     {tNav(link.key)}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
           <div>
-            <h4 className="text-[11px] uppercase tracking-wider text-ivory/50 mb-5">
+            <h4 className="text-[11px] uppercase tracking-wider text-ivory/50 mb-5 flex items-center gap-2">
+              <span className="size-1 rounded-full bg-brand" />
               {t("servicesHeading")}
             </h4>
             <ul className="space-y-3">
               {SERVICE_LINKS.map((s) => (
                 <li key={s}>
-                  <a
-                    href="#services"
-                    className="text-[14px] text-ivory/85 hover:text-emerald-brand transition-colors duration-300 cursor-pointer"
+                  <Link
+                    href="/#services"
+                    className="group inline-flex items-center gap-1.5 text-[14px] text-ivory/85 hover:text-brand transition-colors duration-300 cursor-pointer"
                   >
+                    <span className="h-px w-0 bg-brand transition-all duration-300 group-hover:w-3" />
                     {s}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
           <div>
-            <h4 className="text-[11px] uppercase tracking-wider text-ivory/50 mb-5">
+            <h4 className="text-[11px] uppercase tracking-wider text-ivory/50 mb-5 flex items-center gap-2">
+              <span className="size-1 rounded-full bg-brand" />
               {t("contactHeading")}
             </h4>
             <ul className="space-y-3 text-[14px] text-ivory/85">
@@ -117,7 +203,7 @@ const Footer = async () => {
               <li>
                 <a
                   href={BUSINESS.phone.landline1Href}
-                  className="hover:text-emerald-brand transition-colors tabular-nums cursor-pointer"
+                  className="hover:text-brand transition-colors tabular-nums cursor-pointer"
                 >
                   {BUSINESS.phone.landline1}
                 </a>
@@ -125,7 +211,7 @@ const Footer = async () => {
               <li>
                 <a
                   href={`mailto:${BUSINESS.email}`}
-                  className="hover:text-emerald-brand transition-colors cursor-pointer break-all"
+                  className="hover:text-brand transition-colors cursor-pointer break-all"
                 >
                   {BUSINESS.email}
                 </a>
@@ -134,12 +220,13 @@ const Footer = async () => {
           </div>
 
           <div>
-            <h4 className="text-[11px] uppercase tracking-wider text-ivory/50 mb-5">
+            <h4 className="text-[11px] uppercase tracking-wider text-ivory/50 mb-5 flex items-center gap-2">
+              <span className="size-1 rounded-full bg-brand" />
               {t("hoursHeading")}
             </h4>
             <ul className="space-y-3 text-[14px] text-ivory/85">
               <li className="flex items-center gap-2">
-                <span className="size-1.5 rounded-full bg-emerald-brand animate-pulse" />
+                <span className="size-1.5 rounded-full bg-brand animate-pulse" />
                 Δευ — Παρ · {BUSINESS.hours.weekdays}
               </li>
               <li>Σάββατο · {BUSINESS.hours.saturday}</li>
@@ -149,20 +236,50 @@ const Footer = async () => {
         </div>
       </div>
 
+      {/* Giant decorative wordmark */}
+      <div
+        aria-hidden
+        className="relative overflow-hidden border-t border-ivory/10"
+      >
+        <div className="mx-auto max-w-[1400px] px-6 lg:px-10 py-10">
+          <p className="font-instrument italic text-[clamp(4rem,15vw,14rem)] leading-[0.9] tracking-[-0.02em] bg-linear-to-b from-ivory/15 to-ivory/2 bg-clip-text text-transparent select-none whitespace-nowrap">
+            {BUSINESS.nameEn}
+            <span className="text-brand/50">.</span>
+          </p>
+        </div>
+      </div>
+
       {/* Bottom */}
-      <div className="border-t border-ivory/10">
-        <div className="mx-auto max-w-[1280px] px-6 lg:px-10 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div className="relative border-t border-ivory/10">
+        <div className="mx-auto max-w-[1280px] px-6 lg:px-10 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
           <p className="text-[12px] text-ivory/50">
             &copy; {new Date().getFullYear()} {BUSINESS.name}. {t("rights")}
           </p>
-          <a
-            href="https://hexaigon.gr"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[12px] text-ivory/50 hover:text-emerald-brand transition-colors cursor-pointer"
-          >
-            Crafted by Hexaigon
-          </a>
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[12px] text-ivory/55">
+            <Link
+              href="/#contact"
+              className="hover:text-brand transition-colors cursor-pointer whitespace-nowrap"
+            >
+              {t("policy")}
+            </Link>
+            <span className="h-3 w-px bg-ivory/15" />
+            <Link
+              href="/#contact"
+              className="hover:text-brand transition-colors cursor-pointer whitespace-nowrap"
+            >
+              {t("terms")}
+            </Link>
+            <span className="h-3 w-px bg-ivory/15" />
+            <a
+              href="https://hexaigon.gr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-1.5 hover:text-brand transition-colors cursor-pointer whitespace-nowrap"
+            >
+              <Hexagon className="size-3.5 text-brand" strokeWidth={2} />
+              Made by Hexaigon
+            </a>
+          </div>
         </div>
       </div>
     </footer>

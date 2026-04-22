@@ -34,6 +34,9 @@ export const BUSINESS = {
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3141.5!2d23.832!3d38.05!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzjCsDAzJzAwLjAiTiAyM8KwNDknNTUuMiJF!5e0!3m2!1sel!2sgr!4v1",
   googleMapsLink:
     "https://www.google.com/maps/search/Ανδ.+Παπανδρέου+2Α+Μελίσσια+151+27",
+  googlePlaceId: "15838908543954449373",
+  googleReviewsUrl:
+    "https://www.google.com/maps?cid=15838908543954449373",
 
   hours: {
     weekdays: "09:00 - 16:00",

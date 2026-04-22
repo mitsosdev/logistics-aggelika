@@ -9,21 +9,16 @@
     "book": "Book a meeting"
   },
   "Hero": {
-    "eyebrow": "Accounting · Tax Office · Melissia, Athens",
-    "title1": "Numbers that",
-    "title2": "tell the truth,",
-    "title3": "year after year.",
-    "subtitle": "Specialised accounting, tax and labour services for individuals and businesses — over three decades of experience in Attica.",
+    "eyebrow": "Accounting office · since 1993",
+    "title1": "Your finances,",
+    "title2Before": "in",
+    "title2Em": "safe",
+    "title2After": "hands.",
+    "subtitle": "Accounting, tax and advisory services for businesses and individuals. Transparency, consistency and a personal relationship — at every filing, every balance sheet, every meeting.",
     "cta1": "Book a meeting",
-    "cta2": "Explore services",
-    "captionName": "Ilias P. Viliotis",
-    "captionRole": "Economist — University of Piraeus graduate",
-    "statYearsValue": "30+",
-    "statYearsLabel": "years of experience",
-    "statClientsValue": "500+",
-    "statClientsLabel": "active clients",
-    "statAccuracyValue": "99%",
-    "statAccuracyLabel": "filing accuracy"
+    "cta2": "Our services",
+    "captionTitle": "On every deadline",
+    "captionMeta": "E3, E9, VAT, payroll"
   },
   "Trust": {
     "item1": "Member of the Economic Chamber",
@@ -151,11 +146,19 @@
   },
   "Footer": {
     "description": "Accounting & Tax office in Melissia. Services for individuals and businesses since 1993.",
+    "tagline": "Financial Consultant · Est. 1993",
     "navHeading": "Navigation",
     "servicesHeading": "Services",
     "contactHeading": "Contact",
     "hoursHeading": "Hours",
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "ctaTitle": "Ready to get started?",
+    "ctaSub": "Book a free 20-minute intro call — no strings attached.",
+    "ctaButton": "Book a meeting",
+    "policy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "openToday": "Open today",
+    "since": "Since 1993"
   },
   "HomePage": {
     "title": "Home",

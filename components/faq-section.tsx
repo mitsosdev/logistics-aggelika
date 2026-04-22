@@ -16,8 +16,8 @@ export const FaqSection = async () => {
   return (
     <section className="relative bg-paper/50 py-24 lg:py-40 border-y border-ink/8">
       <div className="mx-auto max-w-[1280px] px-6 lg:px-10">
-        <div className="grid grid-cols-12 gap-6 lg:gap-10">
-          <div className="col-span-12 lg:col-span-5 lg:sticky lg:top-28 lg:self-start">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-10">
+          <div className="lg:col-span-5 lg:sticky lg:top-28 lg:self-start">
             <div className="flex items-center gap-3 mb-8">
               <span className="h-px w-12 bg-ink/30" />
               <span className="text-[11px] font-medium tracking-[0.18em] uppercase text-muted-ink">
@@ -29,7 +29,7 @@ export const FaqSection = async () => {
             </h2>
           </div>
 
-          <div className="col-span-12 lg:col-span-7">
+          <div className="lg:col-span-7">
             <Accordion type="single" collapsible className="w-full">
               {QS.map((q, i) => {
                 const a = `a${i + 1}` as AKey;
@@ -44,7 +44,7 @@ export const FaqSection = async () => {
                         <span className="font-display text-[13px] tabular-nums text-muted-ink mt-1.5 font-[450]">
                           0{i + 1}
                         </span>
-                        <span className="text-[17px] lg:text-[19px] font-[500] text-ink font-display leading-[1.3] group-hover:text-emerald-brand transition-colors duration-300">
+                        <span className="text-[17px] lg:text-[19px] font-[500] text-ink font-display leading-[1.3] group-hover:text-brand transition-colors duration-300">
                           {t(q)}
                         </span>
                       </span>

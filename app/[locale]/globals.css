@@ -7,7 +7,8 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
-  --font-display: var(--font-fraunces);
+  --font-display: var(--font-literata);
+  --font-instrument: var(--font-instrument);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -45,53 +46,58 @@
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
 
-  /* Brand colors — Editorial Light */
-  --color-ivory: oklch(0.955 0.012 85);
-  --color-paper: oklch(0.915 0.018 85);
-  --color-ink: oklch(0.18 0.04 260);
-  --color-ink-soft: oklch(0.28 0.035 260);
-  --color-emerald-brand: oklch(0.58 0.15 155);
-  --color-emerald-deep: oklch(0.48 0.13 155);
-  --color-muted-ink: oklch(0.46 0.025 250);
-  --color-rule: oklch(0.82 0.015 85);
+  /* Single source of truth for image frames (photos, map thumbnails) */
+  --radius-image: 1.5rem;
+
+  /* Brand colors — HB Logistics · derived from logo */
+  --color-ivory: #FAF8F3;         /* page surface */
+  --color-paper: #F3EEE3;         /* subtle mid-tier surface */
+  --color-ink: #18132E;           /* primary text / dark surface */
+  --color-ink-soft: #3F3860;      /* ink-to-slate midpoint */
+  --color-muted-ink: #6B6782;     /* secondary text (slate) */
+  --color-rule: #E8E4F0;          /* dividers / borders (line) */
+  --color-brand: #6B2FD6;         /* royal purple — interactive accent */
+  --color-brand-deep: #4A1E9E;    /* deep purple — trust / authority */
+  --color-saffron: #FFD60A;       /* highlight (use sparingly) */
 }
 
 :root {
   --radius: 0.375rem;
 
-  /* Brand palette — Editorial: ivory + deep ink + emerald */
-  --ivory: oklch(0.955 0.012 85);
-  --paper: oklch(0.915 0.018 85);
-  --ink: oklch(0.18 0.04 260);
-  --ink-soft: oklch(0.28 0.035 260);
-  --emerald-brand: oklch(0.58 0.15 155);
-  --emerald-deep: oklch(0.48 0.13 155);
-  --muted-ink: oklch(0.46 0.025 250);
-  --rule: oklch(0.82 0.015 85);
+  /* Brand palette — HB Logistics */
+  --ivory: #FAF8F3;
+  --paper: #F3EEE3;
+  --ink: #18132E;
+  --ink-soft: #3F3860;
+  --muted-ink: #6B6782;
+  --rule: #E8E4F0;
+  --brand: #6B2FD6;
+  --brand-deep: #4A1E9E;
+  --saffron: #FFD60A;
 
-  /* Shadcn tokens mapped to editorial light palette */
+  /* Shadcn tokens mapped to HB palette */
   --background: var(--ivory);
   --foreground: var(--ink);
-  --card: oklch(1 0 0);
+  --card: #FFFFFF;
   --card-foreground: var(--ink);
-  --popover: oklch(1 0 0);
+  --popover: #FFFFFF;
   --popover-foreground: var(--ink);
-  --primary: var(--ink);
+  --primary: var(--brand-deep);
   --primary-foreground: var(--ivory);
   --secondary: var(--paper);
   --secondary-foreground: var(--ink);
   --muted: var(--paper);
   --muted-foreground: var(--muted-ink);
-  --accent: var(--emerald-brand);
-  --accent-foreground: oklch(1 0 0);
+  --accent: var(--brand);
+  --accent-foreground: #FFFFFF;
   --destructive: oklch(0.577 0.245 27.325);
   --border: var(--rule);
   --input: var(--rule);
-  --ring: var(--emerald-brand);
-  --chart-1: var(--ink);
-  --chart-2: var(--emerald-brand);
+  --ring: var(--brand);
+  --chart-1: var(--brand-deep);
+  --chart-2: var(--brand);
   --chart-3: var(--muted-ink);
-  --chart-4: var(--paper);
+  --chart-4: var(--saffron);
   --chart-5: var(--ink-soft);
 
   --sidebar: var(--background);
@@ -105,33 +111,34 @@
 }
 
 .dark {
-  --background: oklch(0.13 0.02 260);
-  --foreground: oklch(0.93 0.01 260);
-  --card: oklch(0.18 0.025 260);
-  --card-foreground: oklch(0.93 0.01 260);
-  --popover: oklch(0.18 0.025 260);
-  --popover-foreground: oklch(0.93 0.01 260);
-  --primary: oklch(0.58 0.15 155);
-  --primary-foreground: oklch(0.13 0.02 260);
-  --secondary: oklch(0.22 0.025 260);
-  --secondary-foreground: oklch(0.93 0.01 260);
-  --muted: oklch(0.2 0.02 260);
-  --muted-foreground: oklch(0.65 0.02 260);
-  --accent: oklch(0.58 0.15 155);
-  --accent-foreground: oklch(1 0 0);
+  --background: #0F0B20;          /* deepened ink for dark surface */
+  --foreground: #F2EFE8;
+  --card: #1A1434;
+  --card-foreground: #F2EFE8;
+  --popover: #1A1434;
+  --popover-foreground: #F2EFE8;
+  --primary: #8B5BE8;             /* lifted purple for dark-mode contrast */
+  --primary-foreground: #0F0B20;
+  --secondary: #1F1838;
+  --secondary-foreground: #F2EFE8;
+  --muted: #1A1434;
+  --muted-foreground: #9B96B3;
+  --accent: #8B5BE8;
+  --accent-foreground: #FFFFFF;
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.58 0.15 155);
-  --chart-1: oklch(0.58 0.15 155);
-  --chart-2: oklch(0.65 0.02 260);
-  --chart-3: oklch(0.48 0.13 155);
-  --chart-4: oklch(0.55 0.02 260);
-  --chart-5: oklch(0.35 0.06 260);
+  --border: rgba(255,255,255,0.12);
+  --input: rgba(255,255,255,0.15);
+  --ring: #8B5BE8;
+  --chart-1: #8B5BE8;
+  --chart-2: #FFD60A;
+  --chart-3: #9B96B3;
+  --chart-4: #6B2FD6;
+  --chart-5: #4A1E9E;
 }
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 @layer base {
@@ -152,9 +159,13 @@ html {
   .text-pretty { text-wrap: pretty; }
   .tabular-nums { font-variant-numeric: tabular-nums; }
   .font-display {
-    font-family: var(--font-fraunces);
+    font-family: var(--font-literata);
     font-optical-sizing: auto;
-    font-variation-settings: "opsz" 96, "SOFT" 30;
+    font-variation-settings: "opsz" 72;
+  }
+  .font-instrument {
+    font-family: var(--font-instrument);
+    font-style: italic;
   }
   .marquee-track {
     animation: marquee 40s linear infinite;

@@ -34,8 +34,8 @@ export const ServicesSection = async () => {
     <section id="services" className="relative bg-paper/50 py-24 lg:py-40 border-y border-ink/8">
       <div className="mx-auto max-w-[1280px] px-6 lg:px-10">
         {/* Header */}
-        <div className="grid grid-cols-12 gap-6 lg:gap-10 mb-16 lg:mb-24">
-          <div className="col-span-12 lg:col-span-4">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-10 mb-16 lg:mb-24">
+          <div className="lg:col-span-4">
             <div className="flex items-center gap-3">
               <span className="h-px w-12 bg-ink/30" />
               <span className="text-[11px] font-medium tracking-[0.18em] uppercase text-muted-ink">
@@ -43,7 +43,7 @@ export const ServicesSection = async () => {
               </span>
             </div>
           </div>
-          <div className="col-span-12 lg:col-span-8">
+          <div className="lg:col-span-8">
             <h2 className="font-display text-[clamp(2.25rem,5vw,4rem)] leading-[1.02] tracking-[-0.015em] text-ink font-[500] text-balance">
               {t("title")}
               <span className="italic text-muted-ink font-[450]">
@@ -97,16 +97,16 @@ const ServiceRow = ({
   alt,
   readMore,
 }: ServiceRowProps) => (
-  <article className="group grid grid-cols-12 gap-6 lg:gap-10 py-10 lg:py-14 items-start">
+  <article className="group grid grid-cols-[auto_1fr] gap-x-4 gap-y-6 py-10 lg:grid-cols-12 lg:gap-6 lg:gap-x-10 lg:py-14 items-start">
     {/* Number */}
-    <div className="col-span-2 lg:col-span-1">
+    <div className="lg:col-span-1">
       <span className="font-display text-[clamp(1.5rem,2.25vw,2rem)] text-muted-ink/60 tabular-nums font-[450]">
         {number}
       </span>
     </div>
 
     {/* Title + desc + bullets */}
-    <div className="col-span-10 lg:col-span-6 space-y-6">
+    <div className="lg:col-span-6 space-y-6 min-w-0">
       <h3 className="font-display text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.1] tracking-tight text-ink font-[500]">
         {title}
       </h3>
@@ -119,14 +119,14 @@ const ServiceRow = ({
             key={b}
             className="flex items-center gap-3 text-[13px] text-ink/80"
           >
-            <span className="h-px w-6 bg-emerald-brand shrink-0" />
+            <span className="h-px w-6 bg-brand shrink-0" />
             {b}
           </li>
         ))}
       </ul>
       <a
         href="#contact"
-        className="inline-flex items-center gap-1.5 text-[13px] font-medium text-ink border-b border-ink/30 hover:border-emerald-brand hover:text-emerald-brand transition-colors duration-300 pb-0.5 cursor-pointer"
+        className="inline-flex items-center gap-1.5 text-[13px] font-medium text-ink border-b border-ink/30 hover:border-brand hover:text-brand transition-colors duration-300 pb-0.5 cursor-pointer"
       >
         {readMore}
         <ArrowUpRight
@@ -137,8 +137,8 @@ const ServiceRow = ({
     </div>
 
     {/* Image */}
-    <div className="col-span-12 lg:col-span-5 lg:pl-8">
-      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-sm bg-ivory">
+    <div className="col-span-2 lg:col-span-5 lg:col-start-auto lg:pl-8">
+      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-image bg-ivory">
         <Image
           src={image}
           alt={alt}

@@ -2,16 +2,19 @@ import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { setRequestLocale, getMessages } from "next-intl/server";
-import { Fraunces, Inter } from "next/font/google";
+import { Literata, Inter, EB_Garamond } from "next/font/google";
 import { routing } from "@/lib/i18n/routing";
 import { Providers } from "@/components/providers";
 import { BaseLayoutProps } from "@/types/page-props";
 import "./globals.css";
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
-  subsets: ["latin", "latin-ext"],
-  axes: ["opsz", "SOFT"],
+const SITE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://viliotis.gr";
+
+const literata = Literata({
+  variable: "--font-literata",
+  subsets: ["latin", "latin-ext", "greek"],
+  axes: ["opsz"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -22,7 +25,16 @@ const inter = Inter({
   display: "swap",
 });
 
+const ebGaramond = EB_Garamond({
+  variable: "--font-instrument",
+  subsets: ["latin", "latin-ext", "greek", "greek-ext"],
+  weight: ["400", "500"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Βιλιώτης Ηλίας | Λογιστικό Γραφείο Μελίσσια",
     template: "%s | Βιλιώτης Ηλίας",
@@ -43,6 +55,14 @@ export const metadata: Metadata = {
     "Melissia",
   ],
   authors: [{ name: "Βιλιώτης Ηλίας" }],
+  alternates: {
+    canonical: "/",
+    languages: {
+      el: "/el",
+      en: "/en",
+      "x-default": "/el",
+    },
+  },
   openGraph: {
     title: "Βιλιώτης Ηλίας | Λογιστικό Γραφείο Μελίσσια",
     description:
@@ -50,6 +70,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "el_GR",
     alternateLocale: "en_US",
+    url: SITE_URL,
+    siteName: "Βιλιώτης Ηλίας",
     images: [
       {
         url: "/images/og-image.png",
@@ -65,6 +87,13 @@ export const metadata: Metadata = {
     description:
       "Αξιόπιστες λογιστικές, φορολογικές και εργατικές υπηρεσίες στα Μελίσσια Αττικής.",
     images: ["/images/og-image.png"],
+  },
+  icons: {
+    icon: [
+      { url: "/icon.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
   },
   robots: {
     index: true,
@@ -87,7 +116,7 @@ const LocaleLayout = async ({ children, params }: BaseLayoutProps) => {
   return (
     <html lang={locale} suppressHydrationWarning>
       <body
-        className={`${fraunces.variable} ${inter.variable} font-sans antialiased`}
+        className={`${literata.variable} ${inter.variable} ${ebGaramond.variable} font-sans antialiased`}
       >
         <Providers messages={messages} locale={locale}>
           {children}

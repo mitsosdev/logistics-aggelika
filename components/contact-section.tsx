@@ -1,7 +1,11 @@
 import { getTranslations } from "next-intl/server";
 import { ContactForm } from "@/components/contact-form";
+import { CircleIcon } from "@/components/CircleIcon";
+import { ExpandMap } from "@/components/expand-map";
 import { BUSINESS } from "@/lib/general/constants";
-import { MapPin, Phone, Mail, Clock, ArrowUpRight } from "lucide-react";
+import { MapPin, Phone, Mail, Clock } from "lucide-react";
+
+const BRAND_COLOR = "#6B2FD6";
 
 export const ContactSection = async () => {
   const t = await getTranslations("Contact");
@@ -10,8 +14,8 @@ export const ContactSection = async () => {
     <section id="contact" className="relative bg-ivory py-24 lg:py-40">
       <div className="mx-auto max-w-[1280px] px-6 lg:px-10">
         {/* Header */}
-        <div className="grid grid-cols-12 gap-6 lg:gap-10 mb-16 lg:mb-24">
-          <div className="col-span-12 lg:col-span-4">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-10 mb-16 lg:mb-24">
+          <div className="lg:col-span-4">
             <div className="flex items-center gap-3">
               <span className="h-px w-12 bg-ink/30" />
               <span className="text-[11px] font-medium tracking-[0.18em] uppercase text-muted-ink">
@@ -19,7 +23,7 @@ export const ContactSection = async () => {
               </span>
             </div>
           </div>
-          <div className="col-span-12 lg:col-span-8">
+          <div className="lg:col-span-8">
             <h2 className="font-display text-[clamp(2.25rem,5vw,4rem)] leading-[1.02] tracking-[-0.015em] text-ink font-[500] mb-6 text-balance">
               {t("title")}
             </h2>
@@ -29,14 +33,14 @@ export const ContactSection = async () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-12 gap-10 lg:gap-16">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
           {/* Left: Form */}
-          <div className="col-span-12 lg:col-span-7 pt-6">
+          <div className="lg:col-span-7 pt-6">
             <ContactForm />
           </div>
 
           {/* Right: Info + Map */}
-          <aside className="col-span-12 lg:col-span-5 space-y-8">
+          <aside className="lg:col-span-5 space-y-8">
             <ContactItem
               icon={MapPin}
               label={t("address")}
@@ -72,34 +76,13 @@ export const ContactSection = async () => {
             />
 
             {/* Map */}
-            <a
-              href={BUSINESS.googleMapsLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group mt-4 block relative aspect-[4/3] w-full overflow-hidden rounded-sm border border-ink/15 hover:border-emerald-brand transition-colors duration-300"
-            >
-              <iframe
-                src={BUSINESS.googleMapsEmbed}
-                width="100%"
-                height="100%"
-                style={{ border: 0, filter: "grayscale(0.4) contrast(1.05)" }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Office location"
-                className="pointer-events-none"
+            <div className="mt-4">
+              <ExpandMap
+                address={BUSINESS.address.full}
+                mapsUrl={BUSINESS.googleMapsLink}
+                coordinates="38.0500° N · 23.8320° E"
               />
-              <div className="absolute inset-0 bg-linear-to-t from-ivory/90 via-transparent to-transparent opacity-70" />
-              <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between gap-2">
-                <p className="text-[12px] font-medium text-ink bg-ivory/90 backdrop-blur-sm px-2.5 py-1.5 rounded-sm">
-                  {BUSINESS.address.full}
-                </p>
-                <span className="flex items-center gap-1 text-[11px] font-medium text-ink bg-ivory/90 backdrop-blur-sm px-2.5 py-1.5 rounded-sm group-hover:bg-emerald-brand group-hover:text-ivory transition-colors duration-300">
-                  Open
-                  <ArrowUpRight className="size-3" strokeWidth={2} />
-                </span>
-              </div>
-            </a>
+            </div>
           </aside>
         </div>
       </div>
@@ -125,8 +108,12 @@ const ContactItem = ({
   tabular,
 }: ContactItemProps) => (
   <div className="flex gap-4 border-b border-ink/10 pb-6 last:border-0">
-    <div className="shrink-0 mt-1 flex size-9 items-center justify-center rounded-sm bg-paper text-ink">
-      <Icon className="size-4" strokeWidth={1.75} />
+    <div className="shrink-0 mt-1">
+      <CircleIcon
+        color={BRAND_COLOR}
+        size={44}
+        icon={<Icon className="size-4" strokeWidth={1.75} />}
+      />
     </div>
     <div className="space-y-0.5">
       <p className="text-[11px] uppercase tracking-wider text-muted-ink mb-1.5">
@@ -134,14 +121,18 @@ const ContactItem = ({
       </p>
       {lines.map((line, i) => {
         const text = typeof line === "string" ? line : line.text;
-        const lineHref =
-          typeof line === "string" ? (i === 0 ? href : undefined) : line.href;
+        let lineHref: string | undefined;
+        if (typeof line === "string") {
+          lineHref = i === 0 ? href : undefined;
+        } else {
+          lineHref = line.href;
+        }
         const numClass = tabular ? "tabular-nums" : "";
         return lineHref ? (
           <a
             key={i}
             href={lineHref}
-            className={`block text-[14.5px] text-ink hover:text-emerald-brand transition-colors duration-300 cursor-pointer ${numClass}`}
+            className={`block text-[14.5px] text-ink hover:text-brand transition-colors duration-300 cursor-pointer ${numClass}`}
           >
             {text}
           </a>

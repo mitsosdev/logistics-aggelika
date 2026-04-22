@@ -22,48 +22,86 @@ export interface PlaceReviewsResponse {
 
 const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
 
-/**
- * Internal function to fetch Google reviews from the API
- */
-const fetchGoogleReviewsFromAPI = async (place_id: string): Promise<PlaceReviewsResponse | null> => {
+const isChIJ = (id: string) => id.startsWith("ChIJ");
+
+const resolveChIJFromQuery = async (query: string): Promise<string | null> => {
+  if (!GOOGLE_MAPS_API_KEY) return null;
+  const url = new URL(
+    "https://maps.googleapis.com/maps/api/place/findplacefromtext/json"
+  );
+  url.searchParams.append("input", query);
+  url.searchParams.append("inputtype", "textquery");
+  url.searchParams.append("fields", "place_id");
+  url.searchParams.append("key", GOOGLE_MAPS_API_KEY);
+  const res = await fetch(url.toString());
+  const data = await res.json();
+  const candidate = data?.candidates?.[0];
+  return candidate?.place_id ?? null;
+};
+
+const fetchDetails = async (
+  chijId: string
+): Promise<PlaceReviewsResponse | null> => {
+  if (!GOOGLE_MAPS_API_KEY) return null;
+  const url = new URL("https://maps.googleapis.com/maps/api/place/details/json");
+  url.searchParams.append("place_id", chijId);
+  url.searchParams.append(
+    "fields",
+    "reviews,rating,user_ratings_total,url"
+  );
+  url.searchParams.append("language", "el");
+  url.searchParams.append("key", GOOGLE_MAPS_API_KEY);
+  const res = await fetch(url.toString());
+  const data = await res.json();
+  if (data.status !== "OK") {
+    console.error("Google Places API error:", data.status, data.error_message);
+    return null;
+  }
+  return {
+    reviews: data.result?.reviews ?? [],
+    rating: data.result?.rating,
+    user_ratings_total: data.result?.user_ratings_total,
+    url: data.result?.url,
+  };
+};
+
+const fetchGoogleReviewsFromAPI = async (
+  placeOrCid: string
+): Promise<PlaceReviewsResponse | null> => {
   try {
-    if (!place_id) return null;
+    if (!placeOrCid) return null;
     if (!GOOGLE_MAPS_API_KEY) {
       console.error("Google Maps API key is not configured");
       return null;
     }
 
-    const url = new URL("https://maps.googleapis.com/maps/api/place/details/json");
-    url.searchParams.append("place_id", place_id);
-    url.searchParams.append("fields", "reviews,rating,user_ratings_total,url");
-    url.searchParams.append("key", GOOGLE_MAPS_API_KEY);
+    let chij = isChIJ(placeOrCid) ? placeOrCid : null;
 
-    const response = await fetch(url.toString());
-    const data = await response.json();
-
-    if (data.status !== "OK") {
-      console.error("Google Places API error:", data.status, data.error_message);
-      return null;
+    if (!chij) {
+      const candidates = [
+        "Βιλιώτης Ηλίας Ανδ. Παπανδρέου 2Α Μελίσσια",
+        "Viliotis Ilias Accounting Melissia",
+        `https://www.google.com/maps?cid=${placeOrCid}`,
+      ];
+      for (const q of candidates) {
+        chij = await resolveChIJFromQuery(q);
+        if (chij) break;
+      }
     }
 
-    const result = data.result;
-    return {
-      reviews: result.reviews || [],
-      rating: result.rating,
-      user_ratings_total: result.user_ratings_total,
-      url: result.url,
-    };
+    if (!chij) return null;
+    return await fetchDetails(chij);
   } catch (error) {
     console.error("fetchGoogleReviewsFromAPI error:", error);
     return null;
   }
 };
 
-/**
- * Get Google reviews for a place using Google Places Details API
- * Cached for 5 minutes per place_id
- */
-export const getGoogleReviews = unstable_cache(fetchGoogleReviewsFromAPI, ["google-reviews"], {
-  revalidate: 300, // 5 minutes
-  tags: ["google-reviews"],
-});
+export const getGoogleReviews = unstable_cache(
+  fetchGoogleReviewsFromAPI,
+  ["google-reviews"],
+  {
+    revalidate: 300,
+    tags: ["google-reviews"],
+  }
+);
