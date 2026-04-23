@@ -1,25 +1,28 @@
 import { getTranslations } from "next-intl/server";
 import { ArrowUpRight, ExternalLink } from "lucide-react";
+import { Link } from "@/lib/i18n/navigation";
 import { fetchAadeArticles, type AadeArticle } from "@/lib/aade/scraper";
 
-const MONTHS_EL = [
-  "ΙΑΝ",
-  "ΦΕΒ",
-  "ΜΑΡ",
-  "ΑΠΡ",
-  "ΜΑΪ",
-  "ΙΟΥΝ",
-  "ΙΟΥΛ",
-  "ΑΥΓ",
-  "ΣΕΠ",
-  "ΟΚΤ",
-  "ΝΟΕ",
-  "ΔΕΚ",
-];
+const MONTH_KEYS = [
+  "monthJan",
+  "monthFeb",
+  "monthMar",
+  "monthApr",
+  "monthMay",
+  "monthJun",
+  "monthJul",
+  "monthAug",
+  "monthSep",
+  "monthOct",
+  "monthNov",
+  "monthDec",
+] as const;
+type MonthKey = (typeof MONTH_KEYS)[number];
 
 export const AadeNewsSection = async () => {
   const t = await getTranslations("AadeNews");
   const articles = await fetchAadeArticles(4);
+  const months = MONTH_KEYS.map((k) => t(k));
 
   return (
     <section className="relative bg-ink text-ivory py-24 lg:py-32 overflow-hidden">
@@ -82,6 +85,8 @@ export const AadeNewsSection = async () => {
                 key={a.slug}
                 article={a}
                 readMore={t("readMore")}
+                pressRelease={t("pressRelease")}
+                months={months}
               />
             ))}
           </div>
@@ -90,16 +95,16 @@ export const AadeNewsSection = async () => {
         {/* Footer CTA */}
         <div className="mt-10 flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] text-ivory/60">
           <span>{t("cta")}</span>
-          <a
-            href="#contact"
+          <Link
+            href="/#contact"
             className="group inline-flex items-center gap-1.5 border-b border-ivory/30 hover:border-brand hover:text-brand transition-colors duration-300 pb-0.5 cursor-pointer"
           >
-            Επικοινωνία
+            {t("contactLink")}
             <ArrowUpRight
               className="size-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               strokeWidth={1.75}
             />
-          </a>
+          </Link>
           <span className="ml-auto flex items-center gap-1.5 text-ivory/40">
             <ExternalLink className="size-3" strokeWidth={1.75} />
             <a
@@ -120,13 +125,15 @@ export const AadeNewsSection = async () => {
 type ArticleCardProps = {
   article: AadeArticle;
   readMore: string;
+  pressRelease: string;
+  months: string[];
 };
 
-const ArticleCard = ({ article, readMore }: ArticleCardProps) => {
+const ArticleCard = ({ article, readMore, pressRelease, months }: ArticleCardProps) => {
   const [y, mo, d] = article.date.split("-");
   const day = parseInt(d, 10);
   const monthIndex = parseInt(mo, 10) - 1;
-  const monthShort = MONTHS_EL[monthIndex] ?? "";
+  const monthShort = months[monthIndex] ?? "";
 
   return (
     <a
@@ -151,7 +158,7 @@ const ArticleCard = ({ article, readMore }: ArticleCardProps) => {
       {/* Middle — title */}
       <div className="mt-6 space-y-3 flex-1">
         <p className="text-[10px] tracking-[0.15em] uppercase text-brand font-medium">
-          Δελτίο Τύπου
+          {pressRelease}
         </p>
         <h3 className="font-display text-[17px] leading-[1.3] font-[500] text-balance line-clamp-5">
           {article.title}

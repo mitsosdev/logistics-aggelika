@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { Link } from "@/lib/i18n/navigation";
 import { Button } from "@/components/ui/button";
 
 export const HeroContent = () => {
@@ -65,23 +66,23 @@ export const HeroContent = () => {
           </h1>
 
           {/* Subtitle */}
-          <p className="mt-6 max-w-120 text-[16px] leading-[1.6] text-muted-ink">
+          <p className="mt-6 max-w-120 text-[16px] leading-[1.6] text-muted-ink text-pretty">
             {t("subtitle")}
           </p>
 
           {/* CTAs */}
           <div className="mt-7 flex flex-wrap items-center gap-3">
             <Button asChild size="cta">
-              <a href="#contact">
+              <Link href="/#contact">
                 {t("cta1")}
                 <ArrowRight strokeWidth={2.2} />
-              </a>
+              </Link>
             </Button>
             <Button asChild size="cta" variant="outline">
-              <a href="#services">
+              <Link href="/#services">
                 {t("cta2")}
                 <ArrowRight strokeWidth={2} />
-              </a>
+              </Link>
             </Button>
           </div>
         </div>
@@ -102,7 +103,7 @@ export const HeroContent = () => {
             >
               <Image
                 src="/images/hero-image.png"
-                alt="Λογιστικό γραφείο στα Μελίσσια"
+                alt={t("photoAlt")}
                 fill
                 priority
                 quality={92}

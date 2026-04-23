@@ -69,12 +69,6 @@ export const TestimonialsSection = async () => {
 
         {/* Featured review */}
         <figure className="max-w-4xl mb-20 lg:mb-28">
-          <span
-            className="block font-display text-[120px] lg:text-[180px] leading-[0.7] text-brand/25 select-none mb-2"
-            aria-hidden
-          >
-            &ldquo;
-          </span>
           <blockquote className="font-display text-[clamp(1.5rem,3vw,2.5rem)] leading-tight tracking-tight text-ink font-[450] italic text-balance">
             {featured.text}
           </blockquote>
@@ -114,7 +108,7 @@ export const TestimonialsSection = async () => {
                   <Stars rating={r.rating} />
                 </div>
                 <blockquote className="text-[14.5px] leading-[1.65] text-ink/85 italic font-display font-[450] mb-6 line-clamp-6">
-                  &ldquo;{r.text}&rdquo;
+                  {r.text}
                 </blockquote>
                 <figcaption className="flex items-center gap-3">
                   <div className="relative size-8 shrink-0 rounded-full overflow-hidden bg-paper">

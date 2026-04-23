@@ -31,13 +31,9 @@ export const ProcessSection = async () => {
 
         {/* Steps — horizontal timeline on desktop */}
         <div className="relative">
-          {/* Progress line */}
+          {/* Progress line (full-width, subtle) */}
           <div
-            className="absolute top-6 left-0 right-0 h-px bg-ink/10 hidden lg:block"
-            aria-hidden
-          />
-          <div
-            className="absolute top-6 left-0 w-[40%] h-px bg-brand hidden lg:block"
+            className="absolute top-6 left-0 right-0 h-px bg-linear-to-r from-brand/40 via-ink/10 to-transparent hidden lg:block"
             aria-hidden
           />
 

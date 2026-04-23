@@ -16,7 +16,7 @@ const Group = ({ items, ariaHidden = false }: GroupProps) => (
         key={i}
         className="flex items-center gap-2.5 shrink-0 whitespace-nowrap text-[13px] text-ink/70 tracking-tight"
       >
-        <Check className="size-3.5 text-brand" strokeWidth={2.25} />
+        <Check className="size-3.5 text-purple-600" strokeWidth={2.25} />
         {item}
       </span>
     ))}
@@ -25,7 +25,7 @@ const Group = ({ items, ariaHidden = false }: GroupProps) => (
 
 export const TrustTicker = async () => {
   const t = await getTranslations("Trust");
-  const base = [t("item1"), t("item2"), t("item3"), t("item4"), t("item5")];
+  const base = [t("item1"), t("item2"), t("item3")];
   const items = [...base, ...base, ...base];
 
   return (

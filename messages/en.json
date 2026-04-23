@@ -9,16 +9,17 @@
     "book": "Book a meeting"
   },
   "Hero": {
-    "eyebrow": "Accounting office · since 1993",
+    "eyebrow": "Accounting · Tax Office · Melissia, Athens",
     "title1": "Your finances,",
     "title2Before": "in",
     "title2Em": "safe",
     "title2After": "hands.",
-    "subtitle": "Accounting, tax and advisory services for businesses and individuals. Transparency, consistency and a personal relationship — at every filing, every balance sheet, every meeting.",
+    "subtitle": "Specialised accounting, tax and labour services for individuals and businesses, with over three decades of experience in Attica.",
     "cta1": "Book a meeting",
     "cta2": "Our services",
     "captionTitle": "On every deadline",
-    "captionMeta": "E3, E9, VAT, payroll"
+    "captionMeta": "E3, E9, VAT, payroll",
+    "photoAlt": "Accounting office in Melissia"
   },
   "Trust": {
     "item1": "Member of the Economic Chamber",
@@ -29,8 +30,8 @@
   },
   "About": {
     "label": "Philosophy",
-    "pullQuote": "Numbers tell a story. Our job is to tell it right — with precision, transparency, and no surprises.",
-    "paragraph1": "Since 1993 we've stood beside individuals and businesses with one principle: every file is unique. We don't apply templates — we study, plan, and propose solutions that hold up under audit.",
+    "pullQuote": "Numbers tell a story. Our job is to tell it right, with precision, transparency, and no surprises.",
+    "paragraph1": "Since 1993 we've stood beside individuals and businesses with one principle: every file is unique. We don't apply templates. We study, plan, and propose solutions that hold up under audit.",
     "paragraph2": "Our office combines academic background (University of Piraeus) with constant updates on one of the most fluid tax landscapes. That means fewer errors, fewer penalties, and more legal benefits for you.",
     "signatureName": "Ilias P. Viliotis",
     "signatureRole": "Founder & Financial Consultant"
@@ -54,7 +55,7 @@
     "s2Bullet3": "Tax audits & appeals",
     "s3Number": "03",
     "s3Title": "Labour & Payroll",
-    "s3Desc": "Full-service payroll for businesses — covering hiring, termination, social security (APD) and overall personnel management via myErgani II.",
+    "s3Desc": "Full-service payroll for businesses, covering hiring, termination, social security (APD) and overall personnel management via myErgani II.",
     "s3Bullet1": "Payroll & social security",
     "s3Bullet2": "ERGANI · hiring · termination",
     "s3Bullet3": "Contracts & labour disputes",
@@ -91,17 +92,31 @@
     "source": "Source · aade.gr",
     "updated": "Refreshes hourly",
     "empty": "The AADE feed is unavailable right now.",
-    "cta": "Need clarification on any release?"
+    "cta": "Need clarification on any release?",
+    "contactLink": "Contact us",
+    "pressRelease": "Press Release",
+    "monthJan": "JAN",
+    "monthFeb": "FEB",
+    "monthMar": "MAR",
+    "monthApr": "APR",
+    "monthMay": "MAY",
+    "monthJun": "JUN",
+    "monthJul": "JUL",
+    "monthAug": "AUG",
+    "monthSep": "SEP",
+    "monthOct": "OCT",
+    "monthNov": "NOV",
+    "monthDec": "DEC"
   },
   "Testimonials": {
     "label": "Client voices",
-    "featuredQuote": "We've worked together for 14 years. On every tax change he briefed us before anyone else did. He's the first I call for a dilemma — and the last I'd ever replace.",
+    "featuredQuote": "We've worked together for 14 years. On every tax change he briefed us before anyone else did. He's the first I call for a dilemma, and the last I'd ever replace.",
     "featuredAuthor": "George P.",
     "featuredRole": "Founder, Emporiki LLC",
     "t1Quote": "Professional office, always on time, no surprises. They saved me penalties other accountants had missed.",
     "t1Author": "Maria D.",
     "t1Role": "Freelancer",
-    "t2Quote": "I moved my books here in 2019. The difference vs. the previous office was night-and-day — clear communication and transparent fees.",
+    "t2Quote": "I moved my books here in 2019. The difference vs. the previous office was night-and-day: clear communication and transparent fees.",
     "t2Author": "Nikos K.",
     "t2Role": "Restaurant owner",
     "t3Quote": "Human approach, deep expertise. Saved us through a 4-month tax audit.",
@@ -120,7 +135,7 @@
     "q4": "How does the transition from another accountant work?",
     "a4": "We take over the migration end-to-end: document collection, pending items review, credential transfer and seamless handover.",
     "q5": "What are your office hours?",
-    "a5": "Monday–Friday 09:00–16:00. Urgent emails and messages are handled outside hours; Saturday appointments by arrangement.",
+    "a5": "Monday to Friday, 09:00 to 16:00. Urgent emails and messages are handled outside hours; Saturday appointments by arrangement.",
     "q6": "Do you offer services in English?",
     "a6": "Yes. We serve international clients and foreign residents in Greece in English, with full bilingual documentation."
   },
@@ -133,9 +148,11 @@
     "email": "Email",
     "fax": "Fax",
     "hours": "Working Hours",
-    "weekdays": "Monday - Friday",
+    "weekdays": "Monday to Friday",
     "saturday": "Saturday",
     "sunday": "Sunday",
+    "hoursSaturdayValue": "By appointment",
+    "hoursSundayValue": "Closed",
     "formName": "Full Name",
     "formEmail": "Email",
     "formPhone": "Phone",
@@ -153,16 +170,19 @@
     "hoursHeading": "Hours",
     "rights": "All rights reserved.",
     "ctaTitle": "Ready to get started?",
-    "ctaSub": "Book a free 20-minute intro call — no strings attached.",
+    "ctaSub": "Book a free 20-minute intro call. No strings attached.",
     "ctaButton": "Book a meeting",
     "policy": "Privacy Policy",
     "terms": "Terms of Use",
     "openToday": "Open today",
-    "since": "Since 1993"
+    "since": "Since 1993",
+    "weekdaysShort": "Mon to Fri",
+    "saturdayShort": "Sat",
+    "sundayShort": "Sun"
   },
   "HomePage": {
     "title": "Home",
-    "description": "Viliotis Ilias Accounting Office — Melissia"
+    "description": "Viliotis Ilias Accounting Office, Melissia"
   },
   "Admin": {
     "nav": {

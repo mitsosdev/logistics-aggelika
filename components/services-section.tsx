@@ -1,28 +1,13 @@
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
+import { Link } from "@/lib/i18n/navigation";
 
 const SERVICES = [
-  {
-    prefix: "s1",
-    image: "/images/services/accounting.jpg",
-    alt: "Λογιστικά και τήρηση βιβλίων",
-  },
-  {
-    prefix: "s2",
-    image: "/images/services/tax.jpg",
-    alt: "Φοροτεχνικά και στρατηγική",
-  },
-  {
-    prefix: "s3",
-    image: "/images/services/payroll.jpg",
-    alt: "Εργατικά και μισθοδοσία",
-  },
-  {
-    prefix: "s4",
-    image: "/images/services/other.jpg",
-    alt: "Λοιπές υπηρεσίες — επιδόματα, gov.gr",
-  },
+  { prefix: "s1", image: "/images/services/accounting.jpg" },
+  { prefix: "s2", image: "/images/services/tax.jpg" },
+  { prefix: "s3", image: "/images/services/payroll.jpg" },
+  { prefix: "s4", image: "/images/services/other.jpg" },
 ] as const;
 
 type Prefix = (typeof SERVICES)[number]["prefix"];
@@ -56,22 +41,25 @@ export const ServicesSection = async () => {
 
         {/* Services list */}
         <div className="divide-y divide-ink/10">
-          {SERVICES.map(({ prefix, image, alt }) => (
-            <ServiceRow
-              key={prefix}
-              number={t(`${prefix}Number` as `${Prefix}Number`)}
-              title={t(`${prefix}Title` as `${Prefix}Title`)}
-              desc={t(`${prefix}Desc` as `${Prefix}Desc`)}
-              bullets={[
-                t(`${prefix}Bullet1` as `${Prefix}Bullet1`),
-                t(`${prefix}Bullet2` as `${Prefix}Bullet2`),
-                t(`${prefix}Bullet3` as `${Prefix}Bullet3`),
-              ]}
-              image={image}
-              alt={alt}
-              readMore={t("readMore")}
-            />
-          ))}
+          {SERVICES.map(({ prefix, image }) => {
+            const title = t(`${prefix}Title` as `${Prefix}Title`);
+            return (
+              <ServiceRow
+                key={prefix}
+                number={t(`${prefix}Number` as `${Prefix}Number`)}
+                title={title}
+                desc={t(`${prefix}Desc` as `${Prefix}Desc`)}
+                bullets={[
+                  t(`${prefix}Bullet1` as `${Prefix}Bullet1`),
+                  t(`${prefix}Bullet2` as `${Prefix}Bullet2`),
+                  t(`${prefix}Bullet3` as `${Prefix}Bullet3`),
+                ]}
+                image={image}
+                alt={title}
+                readMore={t("readMore")}
+              />
+            );
+          })}
         </div>
       </div>
     </section>
@@ -124,8 +112,8 @@ const ServiceRow = ({
           </li>
         ))}
       </ul>
-      <a
-        href="#contact"
+      <Link
+        href="/#contact"
         className="inline-flex items-center gap-1.5 text-[13px] font-medium text-ink border-b border-ink/30 hover:border-brand hover:text-brand transition-colors duration-300 pb-0.5 cursor-pointer"
       >
         {readMore}
@@ -133,7 +121,7 @@ const ServiceRow = ({
           className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
           strokeWidth={1.75}
         />
-      </a>
+      </Link>
     </div>
 
     {/* Image */}

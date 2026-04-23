@@ -1,14 +1,16 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { ContactForm } from "@/components/contact-form";
 import { CircleIcon } from "@/components/CircleIcon";
 import { ExpandMap } from "@/components/expand-map";
-import { BUSINESS } from "@/lib/general/constants";
+import { getLocalizedBusiness } from "@/lib/general/business";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
 const BRAND_COLOR = "#6B2FD6";
 
 export const ContactSection = async () => {
   const t = await getTranslations("Contact");
+  const locale = await getLocale();
+  const biz = getLocalizedBusiness(locale);
 
   return (
     <section id="contact" className="relative bg-ivory py-24 lg:py-40">
@@ -45,41 +47,41 @@ export const ContactSection = async () => {
               icon={MapPin}
               label={t("address")}
               lines={[
-                BUSINESS.address.street,
-                BUSINESS.address.building,
-                `${BUSINESS.address.city} ${BUSINESS.address.zip}`,
+                biz.address.street,
+                biz.address.building,
+                `${biz.address.city} ${biz.address.zip}`,
               ]}
             />
             <ContactItem
               icon={Phone}
               label={t("phone")}
               lines={[
-                { text: BUSINESS.phone.landline1, href: BUSINESS.phone.landline1Href },
-                { text: BUSINESS.phone.landline2, href: BUSINESS.phone.landline2Href },
+                { text: biz.phone.landline1, href: biz.phone.landline1Href },
+                { text: biz.phone.landline2, href: biz.phone.landline2Href },
               ]}
               tabular
             />
             <ContactItem
               icon={Mail}
               label={t("email")}
-              lines={[BUSINESS.email]}
-              href={`mailto:${BUSINESS.email}`}
+              lines={[biz.email]}
+              href={`mailto:${biz.email}`}
             />
             <ContactItem
               icon={Clock}
               label={t("hours")}
               lines={[
-                `${t("weekdays")} — ${BUSINESS.hours.weekdays}`,
-                `${t("saturday")} — ${BUSINESS.hours.saturday}`,
-                `${t("sunday")} — ${BUSINESS.hours.sunday}`,
+                `${t("weekdays")} · ${biz.hours.weekdays}`,
+                `${t("saturday")} · ${biz.hours.saturday}`,
+                `${t("sunday")} · ${biz.hours.sunday}`,
               ]}
             />
 
             {/* Map */}
             <div className="mt-4">
               <ExpandMap
-                address={BUSINESS.address.full}
-                mapsUrl={BUSINESS.googleMapsLink}
+                address={biz.address.full}
+                mapsUrl={biz.googleMapsLink}
                 coordinates="38.0500° N · 23.8320° E"
               />
             </div>

@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { getTranslations } from "next-intl/server";
-import { BUSINESS } from "@/lib/general/constants";
+import { getLocale, getTranslations } from "next-intl/server";
+import { getLocalizedBusiness } from "@/lib/general/business";
 import { Link } from "@/lib/i18n/navigation";
 import {
   ArrowUpRight,
@@ -18,16 +18,15 @@ const NAV_LINKS = [
   { href: "/#contact", key: "contact" },
 ] as const;
 
-const SERVICE_LINKS = [
-  "Λογιστικά & Τήρηση Βιβλίων",
-  "Φοροτεχνικά & Σχεδιασμός",
-  "Εργατικά & Μισθοδοσία",
-  "Φορολογικός Σχεδιασμός",
-] as const;
+const SERVICE_KEYS = ["s1Title", "s2Title", "s3Title", "s4Title"] as const;
 
 const Footer = async () => {
   const t = await getTranslations("Footer");
   const tNav = await getTranslations("Nav");
+  const tServices = await getTranslations("Services");
+  const tContact = await getTranslations("Contact");
+  const locale = await getLocale();
+  const biz = getLocalizedBusiness(locale);
 
   return (
     <footer className="relative overflow-hidden bg-ink text-ivory">
@@ -101,13 +100,13 @@ const Footer = async () => {
                 </p>
               </div>
               <h3 className="font-instrument italic text-[clamp(3rem,7vw,6.5rem)] leading-[0.95] tracking-[-0.01em]">
-                {BUSINESS.name}
+                {biz.name}
                 <span className="text-brand">.</span>
               </h3>
               <div className="mt-6 flex items-center gap-3 text-[12px] text-ivory/55">
                 <span className="inline-flex items-center gap-1.5">
                   <span className="size-1.5 rounded-full bg-brand animate-pulse" />
-                  {t("openToday")} · {BUSINESS.hours.weekdays}
+                  {t("openToday")} · {biz.hours.weekdays}
                 </span>
                 <span className="h-3 w-px bg-ivory/15" />
                 <span>{t("since")}</span>
@@ -119,27 +118,27 @@ const Footer = async () => {
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <a
-                  href={BUSINESS.phone.landline1Href}
+                  href={biz.phone.landline1Href}
                   className="group inline-flex items-center gap-2 rounded-full border border-ivory/15 bg-ivory/[0.03] px-4 py-2 text-[12.5px] text-ivory/85 hover:border-brand hover:text-brand transition-colors duration-300 cursor-pointer"
                 >
                   <Phone className="size-3.5" strokeWidth={1.75} />
-                  <span className="tabular-nums">{BUSINESS.phone.landline1}</span>
+                  <span className="tabular-nums">{biz.phone.landline1}</span>
                 </a>
                 <a
-                  href={`mailto:${BUSINESS.email}`}
+                  href={`mailto:${biz.email}`}
                   className="group inline-flex items-center gap-2 rounded-full border border-ivory/15 bg-ivory/[0.03] px-4 py-2 text-[12.5px] text-ivory/85 hover:border-brand hover:text-brand transition-colors duration-300 cursor-pointer"
                 >
                   <Mail className="size-3.5" strokeWidth={1.75} />
                   {t("contactHeading")}
                 </a>
                 <a
-                  href={BUSINESS.googleMapsLink}
+                  href={biz.googleMapsLink}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-2 rounded-full border border-ivory/15 bg-ivory/[0.03] px-4 py-2 text-[12.5px] text-ivory/85 hover:border-brand hover:text-brand transition-colors duration-300 cursor-pointer"
                 >
                   <MapPin className="size-3.5" strokeWidth={1.75} />
-                  {BUSINESS.address.city}
+                  {biz.address.city}
                 </a>
               </div>
             </div>
@@ -176,14 +175,14 @@ const Footer = async () => {
               {t("servicesHeading")}
             </h4>
             <ul className="space-y-3">
-              {SERVICE_LINKS.map((s) => (
-                <li key={s}>
+              {SERVICE_KEYS.map((key) => (
+                <li key={key}>
                   <Link
                     href="/#services"
                     className="group inline-flex items-center gap-1.5 text-[14px] text-ivory/85 hover:text-brand transition-colors duration-300 cursor-pointer"
                   >
                     <span className="h-px w-0 bg-brand transition-all duration-300 group-hover:w-3" />
-                    {s}
+                    {tServices(key)}
                   </Link>
                 </li>
               ))}
@@ -196,24 +195,24 @@ const Footer = async () => {
               {t("contactHeading")}
             </h4>
             <ul className="space-y-3 text-[14px] text-ivory/85">
-              <li>{BUSINESS.address.street}</li>
+              <li>{biz.address.street}</li>
               <li>
-                {BUSINESS.address.city} {BUSINESS.address.zip}
+                {biz.address.city} {biz.address.zip}
               </li>
               <li>
                 <a
-                  href={BUSINESS.phone.landline1Href}
+                  href={biz.phone.landline1Href}
                   className="hover:text-brand transition-colors tabular-nums cursor-pointer"
                 >
-                  {BUSINESS.phone.landline1}
+                  {biz.phone.landline1}
                 </a>
               </li>
               <li>
                 <a
-                  href={`mailto:${BUSINESS.email}`}
-                  className="hover:text-brand transition-colors cursor-pointer break-all"
+                  href={`mailto:${biz.email}`}
+                  className="hover:text-brand transition-colors cursor-pointer wrap-anywhere"
                 >
-                  {BUSINESS.email}
+                  {biz.email}
                 </a>
               </li>
             </ul>
@@ -225,27 +224,26 @@ const Footer = async () => {
               {t("hoursHeading")}
             </h4>
             <ul className="space-y-3 text-[14px] text-ivory/85">
-              <li className="flex items-center gap-2">
-                <span className="size-1.5 rounded-full bg-brand animate-pulse" />
-                Δευ — Παρ · {BUSINESS.hours.weekdays}
+              <li className="flex items-start gap-2">
+                <span className="mt-2 size-1.5 shrink-0 rounded-full bg-brand animate-pulse" />
+                <span className="flex flex-wrap gap-x-1.5">
+                  <span>{t("weekdaysShort")}</span>
+                  <span className="text-ivory/55">·</span>
+                  <span className="tabular-nums">{biz.hours.weekdays}</span>
+                </span>
               </li>
-              <li>Σάββατο · {BUSINESS.hours.saturday}</li>
-              <li>Κυριακή · {BUSINESS.hours.sunday}</li>
+              <li className="flex flex-wrap gap-x-1.5">
+                <span>{t("saturdayShort")}</span>
+                <span className="text-ivory/55">·</span>
+                <span>{biz.hours.saturday}</span>
+              </li>
+              <li className="flex flex-wrap gap-x-1.5">
+                <span>{t("sundayShort")}</span>
+                <span className="text-ivory/55">·</span>
+                <span>{biz.hours.sunday}</span>
+              </li>
             </ul>
           </div>
-        </div>
-      </div>
-
-      {/* Giant decorative wordmark */}
-      <div
-        aria-hidden
-        className="relative overflow-hidden border-t border-ivory/10"
-      >
-        <div className="mx-auto max-w-[1400px] px-6 lg:px-10 py-10">
-          <p className="font-instrument italic text-[clamp(4rem,15vw,14rem)] leading-[0.9] tracking-[-0.02em] bg-linear-to-b from-ivory/15 to-ivory/2 bg-clip-text text-transparent select-none whitespace-nowrap">
-            {BUSINESS.nameEn}
-            <span className="text-brand/50">.</span>
-          </p>
         </div>
       </div>
 
@@ -253,7 +251,7 @@ const Footer = async () => {
       <div className="relative border-t border-ivory/10">
         <div className="mx-auto max-w-[1280px] px-6 lg:px-10 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
           <p className="text-[12px] text-ivory/50">
-            &copy; {new Date().getFullYear()} {BUSINESS.name}. {t("rights")}
+            &copy; {new Date().getFullYear()} {biz.name}. {t("rights")}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[12px] text-ivory/55">
             <Link

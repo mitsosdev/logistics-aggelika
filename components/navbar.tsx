@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Phone, Menu, ArrowRight } from "lucide-react";
 import { Link, usePathname, useRouter } from "@/lib/i18n/navigation";
 import { BUSINESS } from "@/lib/general/constants";
+import { getLocalizedBusiness } from "@/lib/general/business";
 import { cn } from "@/lib/general/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -82,6 +83,8 @@ const LocaleToggle = ({
 
 export const Navbar = () => {
   const t = useTranslations("Nav");
+  const locale = useLocale();
+  const biz = getLocalizedBusiness(locale);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const closeMobile = () => setMobileOpen(false);
@@ -98,7 +101,7 @@ export const Navbar = () => {
             <div className="relative size-9">
               <Image
                 src="/images/logo-v2.webp"
-                alt="Βιλιώτης Ηλίας"
+                alt={biz.name}
                 fill
                 priority
                 sizes="36px"
@@ -107,10 +110,10 @@ export const Navbar = () => {
             </div>
             <div className="hidden sm:block leading-[1.05]">
               <p className="font-display text-[19px] text-ink tracking-[0.01em]">
-                {BUSINESS.name}
+                {biz.name}
               </p>
               <p className="mt-0.5 text-[10px] font-medium uppercase tracking-[0.18em] text-muted-ink">
-                {BUSINESS.title}
+                {biz.title}
               </p>
             </div>
           </Link>
@@ -187,7 +190,7 @@ export const Navbar = () => {
             />
           </div>
           <span className="font-display text-[16px] text-ink">
-            {BUSINESS.name}
+            {biz.name}
           </span>
         </div>
 
